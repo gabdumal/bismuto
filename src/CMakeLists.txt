@@ -13,6 +13,7 @@ target_include_directories(optimization_model
 target_link_libraries(optimization_model
     PRIVATE
         glpk
+        pretty_console
         examples
 )
 

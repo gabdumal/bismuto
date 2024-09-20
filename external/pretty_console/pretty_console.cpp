@@ -1,5 +1,7 @@
 #include "pretty_console.hpp"
 
+#include <sstream>
+
 using namespace std;
 
 void PrettyConsole::setForegroundColor(ostream &output_stream,
@@ -28,6 +30,12 @@ void PrettyConsole::resetFormat(ostream &output_stream) {
     setFormat(output_stream);
 }
 
+PrettyConsole::Decoration PrettyConsole::getDecoration(Color foreground_color,
+                                                       Color background_color,
+                                                       Format format) {
+    return Decoration(foreground_color, background_color, format);
+}
+
 void PrettyConsole::setDecoration(ostream &output_stream,
                                   Decoration decoration) {
     setFormat(output_stream, decoration.format);
@@ -50,4 +58,26 @@ void PrettyConsole::print(string message, Decoration decoration,
     resetFormat(output_stream);
     resetBackgroundColor(output_stream);
     resetForegroundColor(output_stream);
+}
+
+void PrettyConsole::printParagraph(
+    string title, string content, ostream &output_stream,
+    PrettyConsole::Decoration title_decoration,
+    PrettyConsole::Decoration content_decoration) {
+    ostringstream intermediate_stream;
+
+    PrettyConsole::print(title, title_decoration, intermediate_stream);
+
+    PrettyConsole::setDecoration(intermediate_stream, content_decoration);
+
+    std::istringstream content_stream(content);
+    std::string line;
+    while (std::getline(content_stream, line)) {
+        intermediate_stream << PrettyConsole::tab << line << endl;
+    }
+    intermediate_stream << endl;
+
+    PrettyConsole::resetDecoration(intermediate_stream);
+
+    output_stream << intermediate_stream.str();
 }

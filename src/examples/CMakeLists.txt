@@ -18,6 +18,7 @@ target_include_directories(examples
 # Linking libraries
 target_link_libraries(examples
     PRIVATE
+        util
         book_c1_s3_sc1
         book_c3_s1_sc5
 )

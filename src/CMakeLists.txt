@@ -12,12 +12,10 @@ target_include_directories(optimization_model
 # Linking libraries
 target_link_libraries(optimization_model
     PRIVATE
-        pretty_console
-        uuid
-        util
-        example
+        glpk
+        examples
 )
 
 # Directories
 add_subdirectory(util)
-add_subdirectory(example)
+add_subdirectory(examples)

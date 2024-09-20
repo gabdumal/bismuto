@@ -5,18 +5,25 @@
   "C_Cpp.default.intelliSenseMode": "linux-clang-x64",
   "C_Cpp.intelliSenseEngine": "disabled",
   "cSpell.words": [
+    "bnds",
+    "ccache",
     "clangd",
+    "coef",
     "constexpr",
     "Constexpr",
+    "DCMAKE",
+    "devel",
     "glpk",
     "GLPK",
     "glpsol",
+    "groupinstall",
     "Makefiles",
     "Struct"
   ],
   "clang_tidy.additionalOptions": "--config-file=.clang-tidy",
   "clang_tidy.checks": "-*,readability-identifier-naming",
   "clang_tidy.enabled": true,
+  "clangd.completion.style": "bundled",
   "cmake.configureOnOpen": true,
   "cmake.pinnedCommands": [
     "workbench.action.tasks.configureTaskRunner",
@@ -26,6 +33,7 @@
   "editor.detectIndentation": false,
   "editor.formatOnSave": true,
   "editor.inlineSuggest.enabled": true,
+  "editor.inlayHints.enabled": "on",
   "editor.semanticHighlighting.enabled": true,
   "editor.tabSize": 4,
   "files.associations": {

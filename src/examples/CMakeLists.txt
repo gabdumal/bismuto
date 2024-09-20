@@ -7,7 +7,6 @@ target_sources(examples
         examples.hpp
     PRIVATE
         examples.cpp
-        book_c1_s3_sc1.cpp
 )
 
 # Include self
@@ -19,4 +18,10 @@ target_include_directories(examples
 # Linking libraries
 target_link_libraries(examples
     PRIVATE
+        book_c1_s3_sc1
+        book_c3_s1_sc5
 )
+
+# Directories
+add_subdirectory(book_c1_s3_sc1)
+add_subdirectory(book_c3_s1_sc5)

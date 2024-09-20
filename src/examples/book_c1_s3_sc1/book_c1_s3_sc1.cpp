@@ -1,6 +1,8 @@
+#include <glpk.h>
+
 #include <cstdint>
 
-#include "examples.hpp"
+#include "../examples.hpp"
 
 constexpr uint16_t order = 1 + 1000;
 

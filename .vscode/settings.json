@@ -1,10 +1,19 @@
 {
-  //   "C_Cpp.clang_tidy.args": ["--config-file=/path/to/.clang-tidy"],
   "C_Cpp.clang_tidy.enabled": true,
-  //   "C_Cpp.clang_tidy.path": "/path/to/clang-tidy",
-  "C_Cpp.default.cppStandard": "c++23",
   "C_Cpp.default.cStandard": "c23",
-  "C_Cpp.default.intelliSenseMode": "linux-gcc-x64",
+  "C_Cpp.default.cppStandard": "c++23",
+  "C_Cpp.default.intelliSenseMode": "linux-clang-x64",
+  "C_Cpp.intelliSenseEngine": "disabled",
+  "cSpell.words": [
+    "clangd",
+    "constexpr",
+    "Constexpr",
+    "glpk",
+    "GLPK",
+    "glpsol",
+    "Makefiles",
+    "Struct"
+  ],
   "clang_tidy.additionalOptions": "--config-file=.clang-tidy",
   "clang_tidy.checks": "-*,readability-identifier-naming",
   "clang_tidy.enabled": true,
@@ -14,13 +23,11 @@
     "workbench.action.tasks.runTask"
   ],
   "cmake.showOptionsMovedNotification": false,
-  "cSpell.words": ["clangd", "constexpr", "Constexpr", "Struct", "Zircônia"],
   "editor.detectIndentation": false,
   "editor.formatOnSave": true,
   "editor.inlineSuggest.enabled": true,
   "editor.semanticHighlighting.enabled": true,
   "editor.tabSize": 4,
-  "editor.wordWrap": "bounded",
   "files.associations": {
     "*.css": "css",
     "*.tcc": "cpp",

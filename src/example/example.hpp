@@ -1,10 +1,6 @@
 #ifndef __EXAMPLE_HPP__
 #define __EXAMPLE_HPP__
 
-#include <uuid.h>
-
-#include <memory>
-
 using namespace std;
 
 class Example {

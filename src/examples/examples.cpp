@@ -8,5 +8,8 @@ void Examples::run(Example example) {
         case BOOK_C3_S1_SC5:
             bookC3S1Sc5();
             break;
+        case NEIGHBOURHOOD_PLANNING:
+            neighbourhoodPlanning();
+            break;
     }
 }

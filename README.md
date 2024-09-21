@@ -1,4 +1,4 @@
-# DCC163 Operational Research
+# Bismuto Optimizer
 
 ## Environment
 
@@ -12,6 +12,7 @@ Be sure to have installed these tools in your system:
 - `clang`
 - `clang-tools-extra`
 - `cmake`
+- `ninja` (optional)
 
 #### Windows
 
@@ -27,10 +28,10 @@ Then install **CMake** from the official [website](https://cmake.org/download/).
 You can install the necessary tools using the following command:
 
 ```bash
-sudo dnf groupinstall "Development Tools"
+sudo dnf install cmake clang clang-tools-extra ninja-build
 
 # Maybe you need to install the following packages
-sudo dnf install cmake clang clang-tools-extra
+sudo dnf groupinstall "Development Tools"
 ```
 
 ### Extensions

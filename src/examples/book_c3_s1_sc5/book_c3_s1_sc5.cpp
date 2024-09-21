@@ -1,14 +1,22 @@
 #include <glpk.h>
 
+#include <format>
+#include <util.hpp>
+
 #include "../examples.hpp"
 
+using namespace std;
+
 void Examples::bookC3S1Sc5() {
+    string model_path = format("{}/examples/book_c3_s1_sc5/model.glpk",
+                               Util::getExecutableDirectory());
+
     glp_prob *problem;
     double z, bin1, bin2, bin3, bin4, bin5, aluminium, silicon;
 
     problem = glp_create_prob();
 
-    glp_read_prob(problem, 0, SRC__EXAMPLES__BOOK_C3_S1_SC5__MODEL_FILE_PATH);
+    glp_read_prob(problem, 0, model_path.c_str());
 
     glp_simplex(problem, NULL);
 
@@ -22,8 +30,9 @@ void Examples::bookC3S1Sc5() {
     silicon = glp_get_col_prim(problem, 7);
 
     glp_printf(
-        "z = %lf;\nbin1 = %lf;\nbin2 = %lf;\nbin3 = %lf;\nbin4 = %lf;\nbin5 = "
-        "%lf;\n"
+        "z = %lf;\n"
+        "bin1 = %lf;\nbin2 = %lf;\nbin3 = %lf;\n"
+        "bin4 = %lf;\nbin5 = %lf;\n"
         "aluminium = %lf;\nsilicon = %lf;\n",
         z, bin1, bin2, bin3, bin4, bin5, aluminium, silicon);
 

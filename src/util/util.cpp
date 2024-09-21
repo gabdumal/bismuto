@@ -1,5 +1,6 @@
 #include "util.hpp"
 
+#include <filesystem>
 #include <sstream>
 #include <string>
 
@@ -36,4 +37,8 @@ string Util::getLineContent(int line, string content) {
         getline(content_stream, line_content);
     }
     return line_content;
+}
+
+string Util::getExecutableDirectory() {
+    return filesystem::canonical("/proc/self/exe").parent_path().string();
 }

@@ -58,6 +58,7 @@ void PrettyConsole::print(string message, Decoration decoration,
     resetFormat(output_stream);
     resetBackgroundColor(output_stream);
     resetForegroundColor(output_stream);
+    output_stream.flush();
 }
 
 void PrettyConsole::printParagraph(
@@ -75,9 +76,9 @@ void PrettyConsole::printParagraph(
     while (std::getline(content_stream, line)) {
         intermediate_stream << PrettyConsole::tab << line << endl;
     }
-    intermediate_stream << endl;
-
     PrettyConsole::resetDecoration(intermediate_stream);
+
+    intermediate_stream << endl;
 
     output_stream << intermediate_stream.str();
 }

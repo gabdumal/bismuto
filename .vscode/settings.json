@@ -18,7 +18,9 @@
     "GLPK",
     "glpsol",
     "groupinstall",
+    "libreoffice",
     "Makefiles",
+    "outdir",
     "Struct"
   ],
   "clang_tidy.additionalOptions": "--config-file=.clang-tidy",

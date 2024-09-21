@@ -6,7 +6,7 @@ if (${CMAKE_VERSION} VERSION_LESS 3.12)
 endif ()
 
 # Project
-project(dcc163
+project(bismuto
         LANGUAGES CXX
 )
 

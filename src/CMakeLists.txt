@@ -1,19 +1,20 @@
 # Executables
-add_executable(optimization_model
+add_executable(bismuto
     main.cpp
 )
 
 # Include directories
-target_include_directories(optimization_model
+target_include_directories(bismuto
     PUBLIC
         ${CMAKE_CURRENT_LIST_DIR}
 )
 
 # Linking libraries
-target_link_libraries(optimization_model
+target_link_libraries(bismuto
     PRIVATE
         glpk
         pretty_console
+        util
         examples
 )
 

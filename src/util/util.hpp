@@ -1,8 +1,8 @@
-#ifndef UTIL_HPP_
-#define UTIL_HPP_
+#ifndef __UTIL_HPP__
+#define __UTIL_HPP__
 
-#include <pretty_console.hpp>
-
+#include <optional>
+#include <string>
 using namespace std;
 
 namespace Util {
@@ -11,6 +11,8 @@ namespace Util {
     string getTextBetween(string text, optional<string> start,
                           optional<string> end);
     string getLineContent(int line, string content);
+
+    string getExecutableDirectory();
 }  // namespace Util
 
-#endif  // UTIL_HPP_
+#endif  // __UTIL_HPP__

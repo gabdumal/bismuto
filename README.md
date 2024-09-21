@@ -34,6 +34,12 @@ sudo dnf install cmake clang clang-tools-extra ninja-build
 sudo dnf groupinstall "Development Tools"
 ```
 
+For cross-compiling to Windows, you can install the **MinGW** tools.
+
+```bash
+sudo dnf install mingw32-gcc mingw32-crt mingw64-gcc mingw64-gcc-c++ mingw64-crt mingw32-winpthreads mingw64-winpthreads
+```
+
 ### Extensions
 
 The project is set to be developed in Visual Studio Code, with the following extensions:
@@ -77,10 +83,10 @@ In **UNIX** systems, you can run the following command:
 
 ```bash
 # UNIX systems
-./build/src/optimization_model
+./build/src/bismuto
 
 # Windows with MinGW
-.\build\src\optimization_model.exe
+.\build\src\bismuto.exe
 ```
 
 If there are any errors, try deleting the `/build` folder and running the commands again.
@@ -116,3 +122,6 @@ glpsol --version
 ```
 
 The **documentation** can be found in the `/usr/share/doc/glpk-doc` folder.
+
+To cross-compile to Windows, you have to install the **MinGW** version of the library.
+It can be found in the official [website](https://sourceforge.net/projects/winglpk/).

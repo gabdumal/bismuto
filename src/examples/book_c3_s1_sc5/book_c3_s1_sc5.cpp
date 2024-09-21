@@ -1,8 +1,9 @@
 #include <glpk.h>
 
 #include <format>
-#include <util.hpp>
+#include <string>
 
+#include "../../util/util.hpp"
 #include "../examples.hpp"
 
 using namespace std;

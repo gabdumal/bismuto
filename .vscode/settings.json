@@ -21,13 +21,16 @@
     "libreoffice",
     "Makefiles",
     "outdir",
-    "Struct"
+    "Struct",
+    "winpthreads"
   ],
   "clang_tidy.additionalOptions": "--config-file=.clang-tidy",
   "clang_tidy.checks": "-*,readability-identifier-naming",
   "clang_tidy.enabled": true,
   "clangd.completion.style": "bundled",
+  "cmake.buildDirectory": "${workspaceFolder}/build",
   "cmake.configureOnOpen": true,
+  "cmake.configureArgs": ["-DCMAKE_TOOLCHAIN_FILE=cmake/linux.cmake"],
   "cmake.pinnedCommands": [
     "workbench.action.tasks.configureTaskRunner",
     "workbench.action.tasks.runTask"

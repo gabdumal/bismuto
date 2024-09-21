@@ -1,8 +1,6 @@
 #ifndef __EXAMPLE_HPP__
 #define __EXAMPLE_HPP__
 
-#include <glpk.h>
-
 class Examples {
     public:
         enum Example {

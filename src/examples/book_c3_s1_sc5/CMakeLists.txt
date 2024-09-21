@@ -15,6 +15,7 @@ target_include_directories(book_c3_s1_sc5
 # Linking libraries
 target_link_libraries(book_c3_s1_sc5
     PRIVATE
+        glpk
         util
 )
 

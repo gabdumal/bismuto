@@ -5,8 +5,8 @@
 #include <fstream>
 #include <iostream>
 #include <string>
-#include <util.hpp>
 
+#include "../../util/util.hpp"
 #include "../examples.hpp"
 
 using namespace std;

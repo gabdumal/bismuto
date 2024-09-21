@@ -1,11 +1,11 @@
 #include <iostream>
-#include <pretty_console.hpp>
 
+#include "../external/pretty_console/pretty_console.hpp"
 #include "examples/examples.hpp"
 
 using namespace std;
 
-int main(int argc, char *argv[]) {
+int main() {
     PrettyConsole::print(
         "Bismuto Optimizer\n",
         PrettyConsole::Decoration(PrettyConsole::Color::YELLOW,

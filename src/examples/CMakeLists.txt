@@ -19,6 +19,7 @@ target_include_directories(examples
 target_link_libraries(examples
     PRIVATE
         glpk
+        constants
         util
         book_c1_s3_sc1
         book_c3_s1_sc5

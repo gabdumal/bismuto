@@ -1,12 +1,17 @@
-#include "util.hpp"
+#if defined(_WIN32) || defined(_WIN64)
+#    include <windows.h>
+#elif defined(__linux__)
+#    include <filesystem>
+#endif
 
-#include <filesystem>
-#include <sstream>
-#include <iostream>
-#include <string>
-#include <vector>
-#include <unordered_map>
 #include <fstream>
+#include <iostream>
+#include <sstream>
+#include <string>
+#include <unordered_map>
+#include <vector>
+
+#include "util.hpp"
 
 using namespace std;
 
@@ -44,7 +49,14 @@ string Util::getLineContent(int line, string content) {
 }
 
 string Util::getExecutableDirectory() {
-    return filesystem::canonical("/proc/self/exe").parent_path().string();
+#if defined(_WIN32) || defined(_WIN64)
+    char buffer[MAX_PATH];
+    GetModuleFileNameA(NULL, buffer, MAX_PATH);
+    std::string::size_type pos = std::string(buffer).find_last_of("\\/");
+    return std::string(buffer).substr(0, pos);
+#elif defined(__linux__)
+    return std::filesystem::canonical("/proc/self/exe").parent_path().string();
+#endif
 }
 
 vector<string> Util::rowTokenizer(const string& row) {
@@ -60,39 +72,45 @@ vector<string> Util::rowTokenizer(const string& row) {
     return tokens;
 }
 
-void Util::printColsData(const unordered_map<string, vector<string>>& cols_data, const vector<string>& cols_names) {
+void Util::printColsData(const unordered_map<string, vector<string>>& cols_data,
+                         const vector<string>& cols_names) {
     for (const string& col_name : cols_names) {
         cout << "Dados da coluna: " << col_name << ":" << endl;
-        for (const string& dado : cols_data.at(col_name))
+        for (const string& dado : cols_data.at(col_name)) {
             cout << dado << " ";
+        }
         cout << "\n\n";
     }
 }
 
-unordered_map<string, vector<string>> Util::loadCSVData(ifstream& target_file, vector<string>& cols_names) {
-        unordered_map<string, vector<string>> cols_data;
-        string row;
-        bool header_row = true;
+unordered_map<string, vector<string>> Util::loadCSVData(
+    ifstream& target_file, vector<string>& cols_names) {
+    unordered_map<string, vector<string>> cols_data;
+    string row;
+    bool header_row = true;
 
-        while (getline(target_file, row)) {
-            vector<string> row_cells = rowTokenizer(row);
+    while (getline(target_file, row)) {
+        vector<string> row_cells = rowTokenizer(row);
 
-            if (header_row) {
-                cols_names = row_cells;
-                for (const string& name : cols_names)
-                    cols_data[name] = vector<string>();
-                header_row = false;
-                continue;
+        if (header_row) {
+            cols_names = row_cells;
+            for (const string& name : cols_names) {
+                cols_data[name] = vector<string>();
             }
-
-            if (row_cells.size() != cols_names.size()) {
-                cerr << "A linha: " << row << " tem um campo não preenchido" << endl;
-                exit(1);
-            }
-
-            for (size_t i = 0; i < row_cells.size(); i++)
-                cols_data[cols_names[i]].push_back(row_cells[i]);
+            header_row = false;
+            continue;
         }
 
-        return cols_data;
+        if (row_cells.size() != cols_names.size()) {
+            cerr << "A linha: " << row << " tem um campo não preenchido"
+                 << endl;
+            exit(1);
+        }
+
+        for (size_t i = 0; i < row_cells.size(); i++) {
+            cols_data[cols_names[i]].push_back(row_cells[i]);
+        }
     }
+
+    return cols_data;
+}

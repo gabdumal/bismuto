@@ -16,6 +16,7 @@ target_include_directories(neighbourhood_planning
 target_link_libraries(neighbourhood_planning
     PRIVATE
         glpk
+        constants
         util
 )
 

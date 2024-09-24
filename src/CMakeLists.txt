@@ -14,10 +14,12 @@ target_link_libraries(bismuto
     PRIVATE
         glpk
         pretty_console
+        constants
         util
         examples
 )
 
 # Directories
+add_subdirectory(constants)
 add_subdirectory(util)
 add_subdirectory(examples)

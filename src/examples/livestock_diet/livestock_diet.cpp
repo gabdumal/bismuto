@@ -10,9 +10,9 @@
 
 using namespace std;
 
-void Examples::neighbourhoodPlanning() {
-    string runtime_directory = format("{}/examples/neighbourhood_planning",
-                                      Util::getExecutableDirectory());
+void Examples::livestockDiet() {
+    string runtime_directory =
+        format("{}/examples/livestock_diet", Util::getExecutableDirectory());
 
     string convert_ods_to_csv = format(
         "{} --headless --convert-to "

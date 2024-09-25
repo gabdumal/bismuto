@@ -11,7 +11,7 @@ int main() {
                                   PrettyConsole::Color::DEFAULT,
                                   PrettyConsole::Format::BOLD),
         cout);
-    Examples::run(Examples::Example::NEIGHBOURHOOD_PLANNING);
+    Examples::run(Examples::Example::LIVESTOCK_DIET);
 
     return 0;
 }

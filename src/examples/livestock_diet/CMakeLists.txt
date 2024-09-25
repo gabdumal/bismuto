@@ -1,4 +1,4 @@
-# Project
+# Library
 add_library(livestock_diet)
 
 target_sources(livestock_diet

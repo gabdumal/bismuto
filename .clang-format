@@ -2,6 +2,7 @@ AccessModifierOffset: -4
 # AlignAfterOpenBracket: BlockIndent
 BasedOnStyle: Google
 BracedInitializerIndentWidth: 4
+ColumnLimit: 120
 ContinuationIndentWidth: 4
 EmptyLineAfterAccessModifier: Never
 EmptyLineBeforeAccessModifier: LogicalBlock

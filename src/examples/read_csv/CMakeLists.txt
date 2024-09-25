@@ -1,4 +1,4 @@
-# Project
+# Library
 add_library(read_csv)
 
 target_sources(read_csv

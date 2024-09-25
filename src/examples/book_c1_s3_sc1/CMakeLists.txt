@@ -1,4 +1,4 @@
-# Project
+# Library
 add_library(book_c1_s3_sc1)
 
 target_sources(book_c1_s3_sc1

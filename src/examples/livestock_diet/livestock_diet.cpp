@@ -11,8 +11,7 @@
 using namespace std;
 
 void Examples::livestockDiet() {
-    string runtime_directory =
-        format("{}/examples/livestock_diet", Util::getExecutableDirectory());
+    string runtime_directory = format("{}/examples/livestock_diet", Util::getExecutableDirectory());
 
     string convert_ods_to_csv = format(
         "{} --headless --convert-to "
@@ -40,13 +39,13 @@ void Examples::livestockDiet() {
     getline(file, line);
 
     while (getline(file, line)) {
-        size_t pos = 0;
+        size_t position = 0;
         string token;
         int col = 0;
 
-        while ((pos = line.find(',')) != string::npos) {
-            token = line.substr(0, pos);
-            line.erase(0, pos + 1);
+        while ((position = line.find(',')) != string::npos) {
+            token = line.substr(0, position);
+            line.erase(0, position + 1);
 
             if (col == 0) {
                 col++;
@@ -55,8 +54,7 @@ void Examples::livestockDiet() {
 
             double value = atof(token.c_str());
 
-            cout << "Row: " << row << ", Col: " << col << ", Value: " << value
-                 << endl;
+            cout << "Row: " << row << ", Col: " << col << ", Value: " << value << endl;
 
             col++;
         }
@@ -64,8 +62,7 @@ void Examples::livestockDiet() {
         // Process the last token
         if (!line.empty()) {
             double value = atof(line.c_str());
-            cout << "Row: " << row << ", Col: " << col << ", Value: " << value
-                 << endl;
+            cout << "Row: " << row << ", Col: " << col << ", Value: " << value << endl;
         }
 
         row++;

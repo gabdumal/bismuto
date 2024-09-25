@@ -23,10 +23,10 @@ target_link_libraries(examples
         util
         book_c1_s3_sc1
         book_c3_s1_sc5
-        neighbourhood_planning
+        livestock_diet
 )
 
 # Directories
 add_subdirectory(book_c1_s3_sc1)
 add_subdirectory(book_c3_s1_sc5)
-add_subdirectory(neighbourhood_planning)
+add_subdirectory(livestock_diet)

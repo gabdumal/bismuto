@@ -49,3 +49,4 @@ CMakeUserPresets.json
 # Project specific
 build/
 .cache/
+.~lock.*.ods#

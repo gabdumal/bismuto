@@ -24,9 +24,11 @@ target_link_libraries(examples
         book_c1_s3_sc1
         book_c3_s1_sc5
         livestock_diet
+        read_csv
 )
 
 # Directories
 add_subdirectory(book_c1_s3_sc1)
 add_subdirectory(book_c3_s1_sc5)
 add_subdirectory(livestock_diet)
+add_subdirectory(read_csv)

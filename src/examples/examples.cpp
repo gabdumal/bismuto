@@ -11,5 +11,8 @@ void Examples::run(Example example) {
         case LIVESTOCK_DIET:
             livestockDiet();
             break;
+        case READ_CSV:
+            readCsv();
+            break;
     }
 }

@@ -20,13 +20,13 @@ target_link_libraries(read_csv
 )
 
 # Path to the model file relative to the source directory
-set(SRC__EXAMPLES__read_csv__MODEL_ODS "${CMAKE_SOURCE_DIR}/src/examples/read_csv/model.ods")
+set(SRC__EXAMPLES__READ_CSV__DATA_CSV "${CMAKE_SOURCE_DIR}/src/examples/read_csv/data.csv")
 
 # Custom target to copy the model file
-add_custom_target(copy__src_examples_read_csv_ods ALL
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different ${SRC__EXAMPLES__read_csv__MODEL_ODS} $<TARGET_FILE_DIR:read_csv>/model.ods
-    DEPENDS ${SRC__EXAMPLES__read_csv__MODEL_ODS}
+add_custom_target(copy__src__examples__read_csv__data_csv ALL
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different ${SRC__EXAMPLES__READ_CSV__DATA_CSV} $<TARGET_FILE_DIR:read_csv>/data.csv
+    DEPENDS ${SRC__EXAMPLES__READ_CSV__DATA_CSV}
 )
 
 # Rewrite the model file every time the target is built
-add_dependencies(read_csv copy__src_examples_read_csv_ods)
+add_dependencies(read_csv copy__src__examples__read_csv__data_csv)

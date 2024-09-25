@@ -15,38 +15,38 @@ namespace Model {
 
         class Variable {
             private:
+                long id;
                 string name;
+                DataType data_type;
 
             protected:
-                Variable(string name): name(name) {}
+                Variable(long id, string name, DataType data_type): id(id), name(name), data_type(data_type) {}
 
             public:
                 virtual ~Variable() = default;
-                virtual DataType getDataType() const = 0;
 
                 string getName() const { return name; }
+
+                DataType getDataType() const { return data_type; }
         };
 
         class Double: public Variable {
             private:
-                DataType data_type;
                 optional<Value::Double> minimum;
                 optional<Value::Double> maximum;
 
             public:
-                Double(string name, optional<Value::Double> minimum, optional<Value::Double> maximum)
-                    : Variable(name), data_type(DataType::DOUBLE) {
+                Double(long id, string name, optional<Value::Double> minimum, optional<Value::Double> maximum)
+                    : Variable(id, name, DataType::DOUBLE) {
                     if (minimum.has_value() && maximum.has_value()) {
                         if (minimum.value().getValue() > maximum.value().getValue()) {
-                            throw invalid_argument("Minimum value must be less than or equal to maximum value");
+                            throw invalid_argument("Minimum value must be less than or equal to maximum value!");
                         }
                     }
 
                     this->minimum = minimum;
                     this->maximum = maximum;
                 }
-
-                DataType getDataType() const override { return data_type; }
 
                 optional<Value::Double> getMinimum() const { return minimum; }
 
@@ -55,16 +55,15 @@ namespace Model {
 
         class Integer: public Variable {
             private:
-                DataType data_type;
-                optional<Value::Double> minimum;
-                optional<Value::Double> maximum;
+                optional<Value::Integer> minimum;
+                optional<Value::Integer> maximum;
 
             public:
-                Integer(string name, optional<Value::Double> minimum, optional<Value::Double> maximum)
-                    : Variable(name), data_type(DataType::INTEGER) {
+                Integer(long id, string name, optional<Value::Integer> minimum, optional<Value::Integer> maximum)
+                    : Variable(id, name, DataType::INTEGER) {
                     if (minimum.has_value() && maximum.has_value()) {
                         if (minimum.value().getValue() > maximum.value().getValue()) {
-                            throw invalid_argument("Minimum value must be less than or equal to maximum value");
+                            throw invalid_argument("Minimum value must be less than or equal to maximum value!");
                         }
                     }
 
@@ -72,22 +71,16 @@ namespace Model {
                     this->maximum = maximum;
                 }
 
-                DataType getDataType() const override { return data_type; }
+                optional<Value::Integer> getMinimum() const { return minimum; }
 
-                optional<Value::Double> getMinimum() const { return minimum; }
-
-                optional<Value::Double> getMaximum() const { return maximum; }
+                optional<Value::Integer> getMaximum() const { return maximum; }
         };
 
-        class Boolean: public Variable {
-            private:
-                DataType data_type;
-
+        class Binary: public Variable {
             public:
-                Boolean(string name): Variable(name), data_type(DataType::BOOLEAN) {}
-
-                DataType getDataType() const override { return data_type; }
+                Binary(long id, string name): Variable(id, name, DataType::BINARY) {}
         };
+
     }  // namespace Variable
 
 }  // namespace Model

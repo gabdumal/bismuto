@@ -1,56 +1,43 @@
 #ifndef __VALUE_HPP__
 #define __VALUE_HPP__
 
+#include <stdexcept>
+#include <type_traits>
+using namespace std;
+
 namespace Model {
 
-    enum class DataType { DOUBLE, INTEGER, BOOLEAN };
+    enum class DataType { DOUBLE, INTEGER, BINARY };
 
     namespace Value {
 
+        template<typename T>
         class Value {
-            public:
-                virtual ~Value() = default;
-                virtual DataType getDataType() const = 0;
-        };
-
-        class Double: public Value {
             private:
+                T value;
                 DataType data_type;
-                double value;
 
             public:
-                Double(double value): data_type(DataType::DOUBLE), value(value) {}
+                Value(T value): value(value) {
+                    if constexpr (is_same_v<T, double>) {
+                        this->data_type = DataType::DOUBLE;
+                    } else if constexpr (is_same_v<T, int>) {
+                        this->data_type = DataType::INTEGER;
+                    } else if constexpr (is_same_v<T, bool>) {
+                        this->data_type = DataType::BINARY;
+                    }
 
-                DataType getDataType() const override { return data_type; }
+                    throw invalid_argument("Invalid data type! Valid values are double, int, and bool.");
+                }
 
-                double getValue() const { return value; }
+                DataType getDataType() const { return this->data_type; }
+
+                T getValue() const { return this->value; }
         };
 
-        class Integer: public Value {
-            private:
-                DataType data_type;
-                int value;
-
-            public:
-                Integer(int value): data_type(DataType::INTEGER), value(value) {}
-
-                DataType getDataType() const override { return data_type; }
-
-                int getValue() const { return value; }
-        };
-
-        class Boolean: public Value {
-            private:
-                DataType data_type;
-                bool value;
-
-            public:
-                Boolean(bool value): data_type(DataType::BOOLEAN), value(value) {}
-
-                DataType getDataType() const override { return data_type; }
-
-                bool getValue() const { return value; }
-        };
+        using Double = Value<double>;
+        using Integer = Value<int>;
+        using Boolean = Value<bool>;
 
     }  // namespace Value
 

@@ -3,10 +3,8 @@ add_library(model)
 
 # Sources
 target_sources(model
-    PUBLIC
+    INTERFACE
         model.hpp
-    PRIVATE
-        model.cpp
 )
 
 # Include self
@@ -18,6 +16,7 @@ target_include_directories(model
 # Linking libraries
 target_link_libraries(model
     PRIVATE
+        value
         variable
         constraint
         objective

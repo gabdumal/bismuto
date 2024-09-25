@@ -5,6 +5,7 @@
 #include <string>
 
 #include "../../constants/constants.hpp"
+#include "../../model/model.hpp"
 #include "../../util/util.hpp"
 #include "../examples.hpp"
 
@@ -28,6 +29,9 @@ void Examples::livestockDiet() {
     cout << "Reading model from " << model_path << "..." << endl;
 
     ifstream file(model_path);
+
+    Model::Model model("Livestock Diet");
+
     if (!file.is_open()) {
         throw runtime_error("Failed to open model.csv!");
     }

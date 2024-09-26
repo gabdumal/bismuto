@@ -35,6 +35,8 @@ namespace Model {
 
             void readVariables(ifstream &file);
 
+            void readObjective(ifstream &file);
+
         public:
             Model(string name): name(name) {};
             ~Model() {};

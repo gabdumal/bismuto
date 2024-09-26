@@ -3,15 +3,22 @@
 #include <cstdlib>
 #include <fstream>
 #include <iostream>
+#include <memory>
 #include <string>
 
 #include "../util/util.hpp"
+#include "constraint/constraint.hpp"
+#include "objective/objective.hpp"
 
 using namespace std;
 
 namespace Model {
 
     void Model::addVariable(string name, DataType data_type, optional<double> minimum, optional<double> maximum) {
+        if (this->has_set_all_variables) {
+            throw invalid_argument("All variables have already been set!");
+        }
+
         if (data_type == DataType::BINARY) {
             auto variable = Variable::Binary(this->next_variable_id++, name);
             variables.push_back(variable);
@@ -41,14 +48,11 @@ namespace Model {
         this->has_set_all_variables = true;
     }
 
-    void Model::addConstraint(string name, DataType data_type, vector<double> coefficients,
-                              Constraint::Comparision comparision, double compared_value) {
+    void Model::addConstraint(string name, DataType data_type, Coefficients coefficients, Constraint::Comparision comparision, double compared_value) {
         if (!this->has_set_all_variables) {
             throw invalid_argument("All variables must be set before adding constraints!");
         }
-        auto shared_variables = make_shared<vector<shared_ptr<Variable::Variable>>>();
-        Constraint::Constraint constraint(next_constraint_id++, name, data_type, shared_variables, coefficients,
-                                          comparision, compared_value);
+        Constraint::Constraint constraint(next_constraint_id++, name, data_type, coefficients, comparision, compared_value);
     }
 
     void Model::readCsv(ifstream &file) {
@@ -57,7 +61,10 @@ namespace Model {
             return;
         }
 
+        string line;
         this->readVariables(file);
+        getline(file, line);  // Skip header row
+        this->readObjective(file);
 
         file.close();
     }
@@ -76,28 +83,28 @@ namespace Model {
                 return true;
             };
 
-        function<bool(const string &)> should_break_on_empty_column =
+        function<bool(const string &)> should_stop_on_empty_column =
             [&headers_to_read_on_current_row](const string &token) {
                 return headers_to_read_on_current_row == 0 && token.empty();
             };
 
         getline(file, line);
-        Util::Row names = Util::splitIntoTokens(line, ',', should_skip_header_column, should_break_on_empty_column);
+        Util::Row names = Util::splitIntoTokens(line, ',', should_skip_header_column, should_stop_on_empty_column);
         headers_to_read_on_current_row = header_columns;
 
         unsigned int number_of_variables = names.size();
         unsigned int variables_to_read_on_current_row = number_of_variables;
 
-        function<bool(const string &)> should_break_when_no_more_variables =
+        function<bool(const string &)> should_stop_when_no_more_variables =
             [&variables_to_read_on_current_row](const string &token) {
                 return variables_to_read_on_current_row-- == 0;
             };
 
         getline(file, line);
         Util::Row data_types =
-            Util::splitIntoTokens(line, ',', should_skip_header_column, should_break_when_no_more_variables);
+            Util::splitIntoTokens(line, ',', should_skip_header_column, should_stop_when_no_more_variables);
         if (data_types.size() != number_of_variables) {
-            cerr << "Erro ao ler os tipos das variáveis!" << endl;
+            cerr << "Error reading variable data types!" << endl;
             exit(1);
         }
         headers_to_read_on_current_row = header_columns;
@@ -105,9 +112,9 @@ namespace Model {
 
         getline(file, line);
         Util::Row minimum_values =
-            Util::splitIntoTokens(line, ',', should_skip_header_column, should_break_when_no_more_variables);
+            Util::splitIntoTokens(line, ',', should_skip_header_column, should_stop_when_no_more_variables);
         if (minimum_values.size() != number_of_variables) {
-            cerr << "Erro ao ler os valores mínimos das variáveis!" << endl;
+            cerr << "Error reading variable minimum values!" << endl;
             exit(1);
         }
         headers_to_read_on_current_row = header_columns;
@@ -115,9 +122,9 @@ namespace Model {
 
         getline(file, line);
         Util::Row maximum_values =
-            Util::splitIntoTokens(line, ',', should_skip_header_column, should_break_when_no_more_variables);
+            Util::splitIntoTokens(line, ',', should_skip_header_column, should_stop_when_no_more_variables);
         if (maximum_values.size() != number_of_variables) {
-            cerr << "Erro ao ler os valores máximos das variáveis!" << endl;
+            cerr << "Error reading variable maximum values!" << endl;
             exit(1);
         }
 
@@ -132,6 +139,44 @@ namespace Model {
             this->addVariable(name, data_type, minimum, maximum);
         }
         this->allVariablesHaveBeenSet();
+    }
+
+    void Model::readObjective(ifstream &file) {
+        if (!this->has_set_all_variables) {
+            throw invalid_argument("All variables must be set before adding the objective!");
+        }
+
+        string line;
+        constexpr int header_columns = 5;
+        unsigned int number_of_variables = this->variables.size();
+        unsigned int tokens_to_read_on_current_row = header_columns + number_of_variables;
+
+        function<bool(const string &)>
+            should_never_skip = [](const string &token) { return false; };
+
+        function<bool(const string &)> should_stop_when_no_more_tokens =
+            [&tokens_to_read_on_current_row](const string &token) { return tokens_to_read_on_current_row-- == 0; };
+
+        getline(file, line);
+        Util::Row tokens = Util::splitIntoTokens(line, ',', should_never_skip, should_stop_when_no_more_tokens);
+        if (tokens.size() != header_columns + number_of_variables) {
+            cerr << "Error reading objective!" << endl;
+            exit(1);
+        }
+
+        DataType data_type = tokens[1] == "Real"      ? DataType::DOUBLE
+                             : tokens[1] == "Inteiro" ? DataType::INTEGER
+                                                      : DataType::BINARY;
+        Objective::Direction direction =
+            tokens[3] == "Max" ? Objective::Direction::MAXIMIZE : Objective::Direction::MINIMIZE;
+
+        Coefficients coefficients;
+        for (unsigned int i = 0; i < number_of_variables; i++) {
+            coefficients.push_back(stod(tokens[header_columns + i]));
+        }
+
+        Objective::Objective objective(data_type, direction, coefficients);
+        this->setObjective(objective);
     }
 
 }  // namespace Model

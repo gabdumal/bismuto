@@ -59,8 +59,8 @@ string Util::getExecutableDirectory() {
 #endif
 }
 
-Util::Row Util::splitIntoTokens(const string& line, char separator, function<bool(const string&)> should_continue,
-                                function<bool(const string&)> should_break) {
+Util::Row Util::splitIntoTokens(const string& line, char separator, function<bool(const string&)> should_skip,
+                                function<bool(const string&)> should_stop) {
     Row tokens;
     size_t current_position = 0;
 
@@ -70,10 +70,10 @@ Util::Row Util::splitIntoTokens(const string& line, char separator, function<boo
         string token = line.substr(current_position, next_position - current_position);
         current_position = next_position + 1;
 
-        if (should_continue(token)) {
+        if (should_skip(token)) {
             continue;
         }
-        if (should_break(token)) {
+        if (should_stop(token)) {
             break;
         }
         tokens.push_back(token);

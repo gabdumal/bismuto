@@ -25,6 +25,8 @@ namespace Model {
             public:
                 virtual ~Variable() = default;
 
+                long getId() const { return id; }
+
                 string getName() const { return name; }
 
                 DataType getDataType() const { return data_type; }
@@ -36,8 +38,7 @@ namespace Model {
                 optional<double> maximum;
 
             public:
-                Double(long id, string name, optional<double> minimum, optional<double> maximum)
-                    : Variable(id, name, DataType::DOUBLE) {
+                Double(long id, string name, optional<double> minimum, optional<double> maximum): Variable(id, name, DataType::DOUBLE) {
                     if (minimum.has_value() && maximum.has_value()) {
                         if (minimum.value() > maximum.value()) {
                             throw invalid_argument("Minimum value must be less than or equal to maximum value!");
@@ -55,12 +56,11 @@ namespace Model {
 
         class Integer: public Variable {
             private:
-                optional<int> minimum;
-                optional<int> maximum;
+                optional<double> minimum;
+                optional<double> maximum;
 
             public:
-                Integer(long id, string name, optional<int> minimum, optional<int> maximum)
-                    : Variable(id, name, DataType::INTEGER) {
+                Integer(long id, string name, optional<double> minimum, optional<double> maximum): Variable(id, name, DataType::INTEGER) {
                     if (minimum.has_value() && maximum.has_value()) {
                         if (minimum.value() > maximum.value()) {
                             throw invalid_argument("Minimum value must be less than or equal to maximum value!");
@@ -71,9 +71,9 @@ namespace Model {
                     this->maximum = maximum;
                 }
 
-                optional<int> getMinimum() const { return minimum; }
+                optional<double> getMinimum() const { return minimum; }
 
-                optional<int> getMaximum() const { return maximum; }
+                optional<double> getMaximum() const { return maximum; }
         };
 
         class Binary: public Variable {

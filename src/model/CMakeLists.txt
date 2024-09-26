@@ -7,6 +7,7 @@ target_sources(model
         model.hpp
     PRIVATE
         model.cpp
+        reading.cpp
 )
 
 # Include self

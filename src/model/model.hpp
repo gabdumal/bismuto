@@ -24,18 +24,16 @@ namespace Model {
             long next_variable_id = 1;
             long next_constraint_id = 1;
 
-            void setObjective(Objective::Objective objective) { this->objective = objective; }
+            void setObjective(Objective::Objective objective);
 
             void addVariable(string name, DataType data_type, optional<double> minimum, optional<double> maximum);
-
             void allVariablesHaveBeenSet();
 
-            void addConstraint(string name, DataType data_type, vector<double> coefficients,
-                               Constraint::Comparision comparision, double compared_value);
+            void addConstraint(string name, DataType data_type, vector<double> coefficients, Constraint::Comparision comparision, double compared_to);
 
             void readVariables(ifstream &file);
-
             void readObjective(ifstream &file);
+            void readConstraints(ifstream &file);
 
         public:
             Model(string name): name(name) {};

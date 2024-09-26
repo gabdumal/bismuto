@@ -29,16 +29,16 @@ namespace Model {
                 DataType data_type;
                 Coefficients coefficients;
                 Comparision comparision;
-                double compared_value;
+                double compared_to;
 
             public:
-                Constraint(long id, string name, DataType data_type, Coefficients coefficients, Comparision comparision, double compared_value)
+                Constraint(long id, string name, DataType data_type, Coefficients coefficients, Comparision comparision, double compared_to)
                     : id(id),
                       name(name),
                       data_type(data_type),
                       coefficients(coefficients),
                       comparision(comparision),
-                      compared_value(compared_value) {
+                      compared_to(compared_to) {
                 }
 
                 ~Constraint() = default;
@@ -51,7 +51,7 @@ namespace Model {
 
                 Comparision getComparision() const { return comparision; }
 
-                double getComparedValue() const { return compared_value; }
+                double getComparedValue() const { return compared_to; }
         };
 
     }  // namespace Constraint

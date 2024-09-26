@@ -23,3 +23,4 @@ target_link_libraries(bismuto
 add_subdirectory(constants)
 add_subdirectory(util)
 add_subdirectory(examples)
+add_subdirectory(model)

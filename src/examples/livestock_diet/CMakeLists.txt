@@ -18,6 +18,7 @@ target_link_libraries(livestock_diet
         glpk
         constants
         util
+        model
 )
 
 # Path to the model file relative to the source directory

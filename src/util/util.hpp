@@ -1,25 +1,33 @@
 #ifndef __UTIL_HPP__
 #define __UTIL_HPP__
 
+#include <functional>
 #include <optional>
 #include <string>
 #include <unordered_map>
 #include <vector>
 using namespace std;
 
-namespace Util {
-    string getFormattedBool(bool value);
+class Util {
+    public:
+        using Row = vector<string>;
 
-    string getTextBetween(string text, optional<string> start, optional<string> end);
-    string getLineContent(int line, string content);
+        static string getFormattedBool(bool value);
 
-    string getExecutableDirectory();
+        static string getTextBetween(string text, optional<string> start, optional<string> end);
+        static string getLineContent(int line, string content);
 
-    vector<string> rowTokenizer(const string& row);
+        static string getExecutableDirectory();
 
-    void printColsData(const unordered_map<string, vector<string>>& cols_data, const vector<string>& cols_names);
+        static void printColsData(const unordered_map<string, vector<string>>& cols_data,
+                                  const vector<string>& cols_names);
 
-    unordered_map<string, vector<string>> loadCSVData(ifstream& target_file, vector<string>& cols_names);
-}  // namespace Util
+        static unordered_map<string, vector<string>> loadCsvData(ifstream& target_file, vector<string>& cols_names);
+
+        static Row splitIntoTokens(
+            const string& line, char separator = ',',
+            function<bool(const string&)> should_continue = [](const string& token) { return false; },
+            function<bool(const string&)> should_break = [](const string& token) { return false; });
+};
 
 #endif  // __UTIL_HPP__

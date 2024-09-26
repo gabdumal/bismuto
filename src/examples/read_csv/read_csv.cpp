@@ -10,8 +10,7 @@
 using namespace std;
 
 void Examples::readCsv() {
-    string runtime_directory =
-        format("{}/examples/read_csv", Util::getExecutableDirectory());
+    string runtime_directory = format("{}/examples/read_csv", Util::getExecutableDirectory());
 
     string file_name = format("{}/data.csv", runtime_directory);
     std::ifstream target_file(file_name);
@@ -22,8 +21,7 @@ void Examples::readCsv() {
     }
 
     vector<string> cols_names;
-    unordered_map<string, vector<string>> cols_data =
-        Util::loadCSVData(target_file, cols_names);
+    unordered_map<string, vector<string>> cols_data = Util::loadCsvData(target_file, cols_names);
 
     target_file.close();
 

@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 
+#include "../data_type.hpp"
 #include "../variable/variable.hpp"
 
 using namespace std;

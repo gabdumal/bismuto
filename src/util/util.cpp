@@ -1,3 +1,4 @@
+#include <functional>
 #if defined(_WIN32) || defined(_WIN64)
 #    include <windows.h>
 #elif defined(__linux__)
@@ -17,8 +18,7 @@ using namespace std;
 
 string Util::getFormattedBool(bool value) { return value ? "TRUE" : "FALSE"; }
 
-string Util::getTextBetween(string text, optional<string> start,
-                            optional<string> end) {
+string Util::getTextBetween(string text, optional<string> start, optional<string> end) {
     size_t start_position = 0;
     if (start.has_value()) {
         start_position = text.find(start.value());
@@ -59,38 +59,36 @@ string Util::getExecutableDirectory() {
 #endif
 }
 
-vector<string> Util::rowTokenizer(const string& row) {
-    char separator = ',';
-    stringstream ss(row);
-    string token;
-    vector<string> tokens;
+Util::Row Util::splitIntoTokens(const string& line, char separator, function<bool(const string&)> should_continue,
+                                function<bool(const string&)> should_break) {
+    Row tokens;
+    size_t current_position = 0;
 
-    while (getline(ss, token, separator)) {
+    while (current_position != string::npos) {
+        size_t next_position = line.find_first_of(separator, current_position);
+
+        string token = line.substr(current_position, next_position - current_position);
+        current_position = next_position + 1;
+
+        if (should_continue(token)) {
+            continue;
+        }
+        if (should_break(token)) {
+            break;
+        }
         tokens.push_back(token);
     }
 
     return tokens;
 }
 
-void Util::printColsData(const unordered_map<string, vector<string>>& cols_data,
-                         const vector<string>& cols_names) {
-    for (const string& col_name : cols_names) {
-        cout << "Dados da coluna: " << col_name << ":" << endl;
-        for (const string& dado : cols_data.at(col_name)) {
-            cout << dado << " ";
-        }
-        cout << "\n\n";
-    }
-}
-
-unordered_map<string, vector<string>> Util::loadCSVData(
-    ifstream& target_file, vector<string>& cols_names) {
+unordered_map<string, vector<string>> Util::loadCsvData(ifstream& target_file, vector<string>& cols_names) {
     unordered_map<string, vector<string>> cols_data;
     string row;
     bool header_row = true;
 
     while (getline(target_file, row)) {
-        vector<string> row_cells = rowTokenizer(row);
+        vector<string> row_cells = splitIntoTokens(row);
 
         if (header_row) {
             cols_names = row_cells;
@@ -102,8 +100,7 @@ unordered_map<string, vector<string>> Util::loadCSVData(
         }
 
         if (row_cells.size() != cols_names.size()) {
-            cerr << "A linha: " << row << " tem um campo não preenchido"
-                 << endl;
+            cerr << "A linha: " << row << " tem um campo não preenchido" << endl;
             exit(1);
         }
 
@@ -115,3 +112,12 @@ unordered_map<string, vector<string>> Util::loadCSVData(
     return cols_data;
 }
 
+void Util::printColsData(const unordered_map<string, vector<string>>& cols_data, const vector<string>& cols_names) {
+    for (const string& col_name : cols_names) {
+        cout << "Dados da coluna: " << col_name << ":" << endl;
+        for (const string& dado : cols_data.at(col_name)) {
+            cout << dado << " ";
+        }
+        cout << "\n\n";
+    }
+}

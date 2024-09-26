@@ -31,46 +31,7 @@ void Examples::livestockDiet() {
     ifstream file(model_path);
 
     Model::Model model("Livestock Diet");
+    model.readCsv(file);
 
-    if (!file.is_open()) {
-        throw runtime_error("Failed to open model.csv!");
-    }
-
-    string line;
-    int row = 1;
-
-    // Skip the header
-    getline(file, line);
-
-    while (getline(file, line)) {
-        size_t position = 0;
-        string token;
-        int col = 0;
-
-        while ((position = line.find(',')) != string::npos) {
-            token = line.substr(0, position);
-            line.erase(0, position + 1);
-
-            if (col == 0) {
-                col++;
-                continue;
-            }
-
-            double value = atof(token.c_str());
-
-            cout << "Row: " << row << ", Col: " << col << ", Value: " << value << endl;
-
-            col++;
-        }
-
-        // Process the last token
-        if (!line.empty()) {
-            double value = atof(line.c_str());
-            cout << "Row: " << row << ", Col: " << col << ", Value: " << value << endl;
-        }
-
-        row++;
-    }
-
-    file.close();
+    cout << "Model read successfully!" << endl;
 }

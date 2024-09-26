@@ -5,7 +5,7 @@
 #include <stdexcept>
 #include <string>
 
-#include "../value/value.hpp"
+#include "../data_type.hpp"
 
 using namespace std;
 
@@ -32,14 +32,14 @@ namespace Model {
 
         class Double: public Variable {
             private:
-                optional<Value::Double> minimum;
-                optional<Value::Double> maximum;
+                optional<double> minimum;
+                optional<double> maximum;
 
             public:
-                Double(long id, string name, optional<Value::Double> minimum, optional<Value::Double> maximum)
+                Double(long id, string name, optional<double> minimum, optional<double> maximum)
                     : Variable(id, name, DataType::DOUBLE) {
                     if (minimum.has_value() && maximum.has_value()) {
-                        if (minimum.value().getValue() > maximum.value().getValue()) {
+                        if (minimum.value() > maximum.value()) {
                             throw invalid_argument("Minimum value must be less than or equal to maximum value!");
                         }
                     }
@@ -48,21 +48,21 @@ namespace Model {
                     this->maximum = maximum;
                 }
 
-                optional<Value::Double> getMinimum() const { return minimum; }
+                optional<double> getMinimum() const { return minimum; }
 
-                optional<Value::Double> getMaximum() const { return maximum; }
+                optional<double> getMaximum() const { return maximum; }
         };
 
         class Integer: public Variable {
             private:
-                optional<Value::Integer> minimum;
-                optional<Value::Integer> maximum;
+                optional<int> minimum;
+                optional<int> maximum;
 
             public:
-                Integer(long id, string name, optional<Value::Integer> minimum, optional<Value::Integer> maximum)
+                Integer(long id, string name, optional<int> minimum, optional<int> maximum)
                     : Variable(id, name, DataType::INTEGER) {
                     if (minimum.has_value() && maximum.has_value()) {
-                        if (minimum.value().getValue() > maximum.value().getValue()) {
+                        if (minimum.value() > maximum.value()) {
                             throw invalid_argument("Minimum value must be less than or equal to maximum value!");
                         }
                     }
@@ -71,9 +71,9 @@ namespace Model {
                     this->maximum = maximum;
                 }
 
-                optional<Value::Integer> getMinimum() const { return minimum; }
+                optional<int> getMinimum() const { return minimum; }
 
-                optional<Value::Integer> getMaximum() const { return maximum; }
+                optional<int> getMaximum() const { return maximum; }
         };
 
         class Binary: public Variable {

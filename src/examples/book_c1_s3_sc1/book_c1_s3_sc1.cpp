@@ -9,7 +9,7 @@ constexpr uint16_t order = 1 + 1000;
 void Examples::bookC1S3Sc1() {
     glp_prob *problem;
     int ia[order], ja[order];
-    double ar[order], z, x1, x2, x3;
+    double ar[order * order], z, x1, x2, x3;
 
     problem = glp_create_prob();
     glp_set_prob_name(problem, "dcc163");

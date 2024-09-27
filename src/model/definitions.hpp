@@ -11,8 +11,6 @@ namespace Model {
                           INTEGER,
                           BINARY };
 
-    using Coefficient = double;
-
 }  // namespace Model
 
 #endif  // __DEFINITIONS_HPP__

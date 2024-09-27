@@ -29,8 +29,7 @@ void Examples::livestockDiet() {
 
     ifstream file(model_path);
 
-    Model::Model model("Livestock Diet");
+    Model::Model model;
     model.readCsv(file);
-
-    cout << "Model read successfully!" << endl;
+    model.solve();
 }

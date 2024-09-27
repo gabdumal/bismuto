@@ -20,8 +20,8 @@ namespace Model {
                 DataType data_type;
 
             protected:
-                optional<Coefficient> minimum = nullopt;
-                optional<Coefficient> maximum = nullopt;
+                optional<double> minimum = nullopt;
+                optional<double> maximum = nullopt;
 
                 Variable(Id id, string name, DataType data_type): id(id), name(name), data_type(data_type) {}
 
@@ -34,14 +34,14 @@ namespace Model {
 
                 DataType getDataType() const { return data_type; }
 
-                optional<Coefficient> getMinimum() const { return minimum; }
+                optional<double> getMinimum() const { return minimum; }
 
-                optional<Coefficient> getMaximum() const { return maximum; }
+                optional<double> getMaximum() const { return maximum; }
         };
 
         class Double: public Variable {
             public:
-                Double(Id id, string name, optional<Coefficient> minimum, optional<Coefficient> maximum): Variable(id, name, DataType::DOUBLE) {
+                Double(Id id, string name, optional<double> minimum, optional<double> maximum): Variable(id, name, DataType::DOUBLE) {
                     if (minimum.has_value() && maximum.has_value()) {
                         if (minimum.value() > maximum.value()) {
                             throw invalid_argument("Minimum value must be less than or equal to maximum value!");
@@ -55,7 +55,7 @@ namespace Model {
 
         class Integer: public Variable {
             public:
-                Integer(Id id, string name, optional<Coefficient> minimum, optional<Coefficient> maximum): Variable(id, name, DataType::INTEGER) {
+                Integer(Id id, string name, optional<double> minimum, optional<double> maximum): Variable(id, name, DataType::INTEGER) {
                     if (minimum.has_value() && maximum.has_value()) {
                         if (minimum.value() > maximum.value()) {
                             throw invalid_argument("Minimum value must be less than or equal to maximum value!");

@@ -121,3 +121,19 @@ void Util::printColsData(const unordered_map<string, vector<string>>& cols_data,
         cout << "\n\n";
     }
 }
+
+double Util::stringToDouble(const string& token) {
+    string copy = token;
+    copy.erase(remove(copy.begin(), copy.end(), ' '), copy.end());
+    size_t pos = copy.find(',');
+    if (pos != string::npos) {
+        copy.replace(pos, 1, ".");
+    }
+    return stod(copy);
+}
+
+string Util::doubleToString(double value) {
+    ostringstream oss;
+    oss << scientific << value;
+    return oss.str();
+}

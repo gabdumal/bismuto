@@ -28,16 +28,18 @@ namespace Model {
 
             /* Getters */
 
-            Coefficient getVariableCoefficient(Id variable_id, Id constraint_id);
+            double getVariableCoefficient(Id variable_id, Id constraint_id);
 
             /* Setters */
 
+            void setName(string name);
+
             void setObjective(Objective::Objective objective);
 
-            void addVariable(string name, DataType data_type, optional<Coefficient> minimum, optional<Coefficient> maximum);
+            void addVariable(string name, DataType data_type, optional<double> minimum, optional<double> maximum);
             void allVariablesHaveBeenSet();
 
-            void addConstraint(string name, DataType data_type, vector<Coefficient> coefficients, Constraint::Comparision comparision, Coefficient compared_to);
+            void addConstraint(string name, DataType data_type, vector<double> coefficients, Constraint::Comparision comparision, double compared_to);
 
             /* Reading from CSV */
 
@@ -47,13 +49,18 @@ namespace Model {
 
             /* Solving */
 
-            void solve();
+            void setObjective(glp_prob *problem);
+            void setVariables(glp_prob *problem);
+            void setConstraints(glp_prob *problem);
+
+            void printDebugInformation(glp_prob *problem);
 
         public:
-            Model(string name): name(name) {};
-            ~Model() {};
+            Model() = default;
+            ~Model() = default;
 
             void readCsv(ifstream &file);
+            void solve();
     };
 
 }  // namespace Model

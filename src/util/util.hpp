@@ -28,6 +28,10 @@ class Util {
             const string& line, char separator = '\t',
             function<bool(const string&)> should_skip = [](const string&) { return false; },
             function<bool(const string&)> should_stop = [](const string&) { return false; });
+
+        static double stringToDouble(const string& token);
+
+        static string doubleToString(double value);
 };
 
 #endif  // __UTIL_HPP__

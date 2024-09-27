@@ -43,7 +43,7 @@ namespace Model {
             };
 
         getline(file, line);
-        Util::Row names = Util::splitIntoTokens(line, ',', should_skip_header_column, should_stop_on_empty_column);
+        Util::Row names = Util::splitIntoTokens(line, '\t', should_skip_header_column, should_stop_on_empty_column);
         headers_to_read_on_current_row = header_columns;
 
         unsigned int number_of_variables = names.size();
@@ -56,7 +56,7 @@ namespace Model {
 
         getline(file, line);
         Util::Row data_types =
-            Util::splitIntoTokens(line, ',', should_skip_header_column, should_stop_when_no_more_variables);
+            Util::splitIntoTokens(line, '\t', should_skip_header_column, should_stop_when_no_more_variables);
         if (data_types.size() != number_of_variables) {
             cerr << "Error reading variable data types!" << endl;
             exit(1);
@@ -66,7 +66,7 @@ namespace Model {
 
         getline(file, line);
         Util::Row minimum_values =
-            Util::splitIntoTokens(line, ',', should_skip_header_column, should_stop_when_no_more_variables);
+            Util::splitIntoTokens(line, '\t', should_skip_header_column, should_stop_when_no_more_variables);
         if (minimum_values.size() != number_of_variables) {
             cerr << "Error reading variable minimum values!" << endl;
             exit(1);
@@ -76,7 +76,7 @@ namespace Model {
 
         getline(file, line);
         Util::Row maximum_values =
-            Util::splitIntoTokens(line, ',', should_skip_header_column, should_stop_when_no_more_variables);
+            Util::splitIntoTokens(line, '\t', should_skip_header_column, should_stop_when_no_more_variables);
         if (maximum_values.size() != number_of_variables) {
             cerr << "Error reading variable maximum values!" << endl;
             exit(1);
@@ -112,7 +112,7 @@ namespace Model {
             [&tokens_to_read_on_current_row](const string &) { return tokens_to_read_on_current_row-- == 0; };
 
         getline(file, line);
-        Util::Row tokens = Util::splitIntoTokens(line, ',', should_never_skip, should_stop_when_no_more_tokens);
+        Util::Row tokens = Util::splitIntoTokens(line, '\t', should_never_skip, should_stop_when_no_more_tokens);
         if (tokens.size() != header_columns + number_of_variables) {
             cerr << "Error reading objective!" << endl;
             exit(1);
@@ -151,7 +151,7 @@ namespace Model {
 
         do {
             getline(file, line);
-            Util::Row tokens = Util::splitIntoTokens(line, ',', should_never_skip, should_stop_when_no_more_tokens);
+            Util::Row tokens = Util::splitIntoTokens(line, '\t', should_never_skip, should_stop_when_no_more_tokens);
 
             if (tokens[0].empty()) {
                 break;

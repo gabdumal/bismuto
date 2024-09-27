@@ -1,18 +1,14 @@
 #ifndef __CONSTRAINT_HPP__
 #define __CONSTRAINT_HPP__
 
-#include <memory>
 #include <string>
 #include <vector>
 
-#include "../data_type.hpp"
-#include "../variable/variable.hpp"
+#include "../definitions.hpp"
 
 using namespace std;
 
 namespace Model {
-
-    using Coefficients = vector<double>;
 
     namespace Constraint {
 
@@ -24,15 +20,15 @@ namespace Model {
 
         class Constraint {
             private:
-                long id;
+                Id id;
                 string name;
                 DataType data_type;
-                Coefficients coefficients;
+                vector<Coefficient> coefficients;
                 Comparision comparision;
-                double compared_to;
+                Coefficient compared_to;
 
             public:
-                Constraint(long id, string name, DataType data_type, Coefficients coefficients, Comparision comparision, double compared_to)
+                Constraint(Id id, string name, DataType data_type, vector<Coefficient> coefficients, Comparision comparision, Coefficient compared_to)
                     : id(id),
                       name(name),
                       data_type(data_type),
@@ -43,7 +39,7 @@ namespace Model {
 
                 ~Constraint() = default;
 
-                long getId() const { return id; }
+                Id getId() const { return id; }
 
                 string getName() const { return name; }
 
@@ -51,7 +47,11 @@ namespace Model {
 
                 Comparision getComparision() const { return comparision; }
 
-                double getComparedValue() const { return compared_to; }
+                Coefficient getComparedValue() const { return compared_to; }
+
+                Coefficient getCoefficient(Id variable_id) const {
+                    return coefficients[variable_id - 1];
+                }
         };
 
     }  // namespace Constraint

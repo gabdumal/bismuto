@@ -29,7 +29,7 @@ namespace Model {
         unsigned int headers_to_read_on_current_row = header_columns;
 
         function<bool(const string &)> should_skip_header_column =
-            [&headers_to_read_on_current_row](const string &token) {
+            [&headers_to_read_on_current_row](const string &) {
                 if (headers_to_read_on_current_row == 0) {
                     return false;
                 }
@@ -50,7 +50,7 @@ namespace Model {
         unsigned int variables_to_read_on_current_row = number_of_variables;
 
         function<bool(const string &)> should_stop_when_no_more_variables =
-            [&variables_to_read_on_current_row](const string &token) {
+            [&variables_to_read_on_current_row](const string &) {
                 return variables_to_read_on_current_row-- == 0;
             };
 
@@ -106,10 +106,10 @@ namespace Model {
         unsigned int tokens_to_read_on_current_row = header_columns + number_of_variables;
 
         function<bool(const string &)>
-            should_never_skip = [](const string &token) { return false; };
+            should_never_skip = [](const string &) { return false; };
 
         function<bool(const string &)> should_stop_when_no_more_tokens =
-            [&tokens_to_read_on_current_row](const string &token) { return tokens_to_read_on_current_row-- == 0; };
+            [&tokens_to_read_on_current_row](const string &) { return tokens_to_read_on_current_row-- == 0; };
 
         getline(file, line);
         Util::Row tokens = Util::splitIntoTokens(line, ',', should_never_skip, should_stop_when_no_more_tokens);
@@ -124,7 +124,7 @@ namespace Model {
         Objective::Direction direction =
             tokens[3] == "Max" ? Objective::Direction::MAXIMIZE : Objective::Direction::MINIMIZE;
 
-        Coefficients coefficients;
+        vector<Coefficient> coefficients;
         for (unsigned int i = 0; i < number_of_variables; i++) {
             coefficients.push_back(stod(tokens[header_columns + i]));
         }
@@ -144,10 +144,10 @@ namespace Model {
         unsigned int tokens_to_read_on_current_row = header_columns + number_of_variables;
 
         function<bool(const string &)>
-            should_never_skip = [](const string &token) { return false; };
+            should_never_skip = [](const string &) { return false; };
 
         function<bool(const string &)> should_stop_when_no_more_tokens =
-            [&tokens_to_read_on_current_row](const string &token) { return tokens_to_read_on_current_row-- == 0; };
+            [&tokens_to_read_on_current_row](const string &) { return tokens_to_read_on_current_row-- == 0; };
 
         do {
             getline(file, line);
@@ -173,7 +173,7 @@ namespace Model {
                                                                       : Constraint::Comparision::GREATER_THAN_OR_EQUAL;
             double compared_to = stod(tokens[4]);
 
-            Coefficients coefficients;
+            vector<Coefficient> coefficients;
             for (unsigned int i = 0; i < number_of_variables; i++) {
                 coefficients.push_back(stod(tokens[header_columns + i]));
             }

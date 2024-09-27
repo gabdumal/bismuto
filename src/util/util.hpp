@@ -26,8 +26,8 @@ class Util {
 
         static Row splitIntoTokens(
             const string& line, char separator = ',',
-            function<bool(const string&)> should_skip = [](const string& token) { return false; },
-            function<bool(const string&)> should_stop = [](const string& token) { return false; });
+            function<bool(const string&)> should_skip = [](const string&) { return false; },
+            function<bool(const string&)> should_stop = [](const string&) { return false; });
 };
 
 #endif  // __UTIL_HPP__

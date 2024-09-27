@@ -1,11 +1,13 @@
 #ifndef __MODEL_HPP__
 #define __MODEL_HPP__
 
+#include <glpk.h>
+
 #include <string>
 #include <vector>
 
 #include "constraint/constraint.hpp"
-#include "data_type.hpp"
+#include "definitions.hpp"
 #include "objective/objective.hpp"
 #include "variable/variable.hpp"
 
@@ -21,19 +23,31 @@ namespace Model {
             vector<Constraint::Constraint> constraints;
             optional<Objective::Objective> objective;
 
-            long next_variable_id = 1;
-            long next_constraint_id = 1;
+            Id next_variable_id = 1;
+            Id next_constraint_id = 1;
+
+            /* Getters */
+
+            Coefficient getVariableCoefficient(Id variable_id, Id constraint_id);
+
+            /* Setters */
 
             void setObjective(Objective::Objective objective);
 
-            void addVariable(string name, DataType data_type, optional<double> minimum, optional<double> maximum);
+            void addVariable(string name, DataType data_type, optional<Coefficient> minimum, optional<Coefficient> maximum);
             void allVariablesHaveBeenSet();
 
-            void addConstraint(string name, DataType data_type, vector<double> coefficients, Constraint::Comparision comparision, double compared_to);
+            void addConstraint(string name, DataType data_type, vector<Coefficient> coefficients, Constraint::Comparision comparision, Coefficient compared_to);
+
+            /* Reading from CSV */
 
             void readVariables(ifstream &file);
             void readObjective(ifstream &file);
             void readConstraints(ifstream &file);
+
+            /* Solving */
+
+            void solve();
 
         public:
             Model(string name): name(name) {};

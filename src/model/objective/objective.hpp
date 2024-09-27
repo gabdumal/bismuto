@@ -1,13 +1,17 @@
 #ifndef __OBJECTIVE_HPP__
 #define __OBJECTIVE_HPP__
 
-#include "../constraint/constraint.hpp"
+#include <vector>
+
+#include "../definitions.hpp"
 
 using namespace std;
 
 namespace Model {
 
     namespace Objective {
+
+        constexpr Id id = 0;
 
         enum class Direction { MINIMIZE,
                                MAXIMIZE };
@@ -16,10 +20,10 @@ namespace Model {
             private:
                 DataType data_type;
                 Direction direction;
-                Coefficients coefficients;
+                vector<Coefficient> coefficients;
 
             public:
-                Objective(DataType data_type, Direction direction, Coefficients coefficients)
+                Objective(DataType data_type, Direction direction, vector<Coefficient> coefficients)
                     : data_type(data_type), direction(direction), coefficients(coefficients) {
                 }
 
@@ -28,6 +32,10 @@ namespace Model {
                 DataType getDataType() const { return data_type; }
 
                 Direction getDirection() const { return direction; }
+
+                Coefficient getCoefficient(Id variable_id) {
+                    return coefficients[variable_id - 1];
+                }
         };
 
     }  // namespace Objective

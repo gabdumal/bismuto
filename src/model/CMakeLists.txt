@@ -7,7 +7,10 @@ target_sources(model
         model.hpp
     PRIVATE
         model.cpp
+        getters.cpp
+        setters.cpp
         reading.cpp
+        solving.cpp
 )
 
 # Include self

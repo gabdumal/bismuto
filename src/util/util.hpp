@@ -25,7 +25,7 @@ class Util {
         static unordered_map<string, vector<string>> loadCsvData(ifstream& target_file, vector<string>& cols_names);
 
         static Row splitIntoTokens(
-            const string& line, char separator = ',',
+            const string& line, char separator = '\t',
             function<bool(const string&)> should_skip = [](const string& token) { return false; },
             function<bool(const string&)> should_stop = [](const string& token) { return false; });
 };

@@ -15,8 +15,7 @@ void Examples::livestockDiet() {
     string runtime_directory = format("{}/examples/livestock_diet", Util::getExecutableDirectory());
 
     string convert_ods_to_csv = format(
-        "{} --headless --convert-to "
-        "csv {}/model.ods --outdir {}",
+        "{} --headless --convert-to csv:\"Text - txt - csv (StarCalc)\":9,34,76,0,1 {}/model.ods --outdir {}",
         Constants::Commands::libreoffice, runtime_directory, runtime_directory);
 
     int result = system(convert_ods_to_csv.c_str());

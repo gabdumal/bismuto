@@ -13,8 +13,7 @@ Be sure to have installed these tools in your system:
 - `clang-tools-extra`
 - `cmake`
 - `ninja`
-- `gdb` (optional)
-- `lldb` (optional)
+- `lldb`
 
 #### Windows
 
@@ -25,11 +24,8 @@ The guide recommends using the `CLANG64` environment.
 Therefore, you can install the needed tools using the following commands:
   
 ```bash
-pacman -S mingw-w64-clang-x86_64-clang
-pacman -S mingw-w64-clang-x86_64-clang-tools-extra
+pacman -S mingw-w64-clang-x86_64-toolchain
 pacman -S mingw-w64-clang-x86_64-ninja
-pacman -S mingw-w64-clang-x86_64-cmake
-pacman -S mingw-w64-clang-x86_64-gdb
 ```
 
 #### Fedora
@@ -39,7 +35,7 @@ You can install the necessary tools using the following command:
 ```bash
 sudo dnf install cmake clang clang-tools-extra ninja-build lldb
 
-# Maybe you need to install the following packages
+# You may need to install the following packages
 sudo dnf groupinstall "Development Tools"
 ```
 
@@ -47,10 +43,10 @@ sudo dnf groupinstall "Development Tools"
 
 The project is set to be developed in Visual Studio Code, with the following extensions:
 
-- CMake Tools
-- CMake
-- C/C++
-- clangd
+- [C/C++ Extension Pack](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools-extension-pack)
+- [CMake Tools](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cmake-tools)
+- [CodeLLDB](https://marketplace.visualstudio.com/items?itemName=vadimcn.vscode-lldb)
+- [clangd](https://marketplace.visualstudio.com/items?itemName=llvm-vs-code-extensions.vscode-clangd)
 
 ### Compiling and Running
 
@@ -114,8 +110,14 @@ You can install LibreOffice through the official [website](https://www.libreoffi
 Then , you need to add the LibreOffice path to the system environment variables.
 
 ```bash
+# Powershell
 setx PATH "%PATH%;C:\Program Files\LibreOffice\program"
+
+# Bash (MSYS2)
+export PATH=$PATH:"/c/Program Files/LibreOffice/program"
 ```
+
+You can run the command-line interface `soffice` to test if the installation was successful.
 
 ##### Fedora
 

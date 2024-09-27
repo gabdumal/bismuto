@@ -19,8 +19,14 @@
         "glpsol",
         "groupinstall",
         "libreoffice",
+        "lldb",
         "Makefiles",
+        "msys",
+        "MSYS",
         "outdir",
+        "pacman",
+        "setx",
+        "soffice",
         "Struct",
         "winpthreads"
     ],
@@ -34,30 +40,18 @@
     ],
     "cmake.configureOnOpen": true,
     "cmake.debugConfig": {
-        "windows": {
-            "MIMode": "gdb",
-            "console": "newExternalWindow",
+        "linux": {
             "cwd": "${workspaceFolder}",
-            "externalConsole": true,
-            "logging": {
-                "engineLogging": true
-            },
-            "program": "${workspaceFolder}\\build\\src\\bismuto",
-            "setupCommands": [
-                {
-                    "description": "Source the .gdbinit file",
-                    "ignoreFailures": true,
-                    "text": "source C:/msys64/home/${env:USERNAME}/.gdbinit"
-                },
-                {
-                    "description": "Enable pretty-printing for gdb",
-                    "ignoreFailures": true,
-                    "text": "-enable-pretty-printing"
-                },
-            ],
-            "stopAtEntry": false,
-            "type": "cppdbg"
+            "program": "${workspaceFolder}/build/src/bismuto",
+            "terminal": "integrated",
+            "type": "lldb"
         },
+        "windows": {
+            "cwd": "${workspaceFolder}",
+            "program": "${workspaceFolder}\\build\\src\\bismuto",
+            "terminal": "console",
+            "type": "lldb"
+        }
     },
     "cmake.pinnedCommands": [
         "workbench.action.tasks.configureTaskRunner",

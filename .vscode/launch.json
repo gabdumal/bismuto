@@ -1,23 +1,32 @@
 {
-    "configurations": [
-        {
-            "args": [],
-            "cwd": "${workspaceFolder}",
-            "name": "LLDB: launch Bismuto (Windows)",
-            "program": "${workspaceFolder}\\build\\src\\bismuto.exe",
-            "request": "launch",
-            "terminal": "console",
-            "type": "lldb"
-        },
-        {
-            "args": [],
-            "cwd": "${workspaceFolder}",
-            "name": "LLDB: launch Bismuto (Linux)",
-            "program": "${workspaceFolder}/build/src/bismuto",
-            "request": "launch",
-            "terminal": "integrated",
-            "type": "lldb"
-        }
-    ],
-    "version": "0.2.0"
+  "configurations": [
+    {
+      "args": [],
+      "cwd": "${workspaceFolder}",
+      "name": "LLDB: launch Bismuto (Windows)",
+      "program": "${workspaceFolder}\\build\\src\\bismuto.exe",
+      "request": "launch",
+      "terminal": "console",
+      "type": "lldb"
+    },
+    {
+      "args": [],
+      "cwd": "${workspaceFolder}",
+      "name": "LLDB: launch Bismuto (Linux)",
+      "program": "${workspaceFolder}/build/src/bismuto",
+      "request": "launch",
+      "terminal": "integrated",
+      "type": "lldb"
+    },
+    {
+      "args": ["--example", "livestock_diet"],
+      "cwd": "${workspaceFolder}",
+      "name": "LLDB: launch Bismuto (Linux) --example",
+      "program": "${workspaceFolder}/build/src/bismuto",
+      "request": "launch",
+      "terminal": "integrated",
+      "type": "lldb"
+    }
+  ],
+  "version": "0.2.0"
 }

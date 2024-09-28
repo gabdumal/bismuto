@@ -63,8 +63,9 @@ Util::Row Util::splitIntoTokens(const string& line, char separator, function<boo
                                 function<bool(const string&)> should_stop) {
     Row tokens;
     size_t current_position = 0;
+    unsigned int length = line.length();
 
-    while (current_position != string::npos) {
+    while (current_position < length) {
         size_t next_position = line.find_first_of(separator, current_position);
 
         string token = line.substr(current_position, next_position - current_position);
@@ -76,7 +77,12 @@ Util::Row Util::splitIntoTokens(const string& line, char separator, function<boo
         if (should_stop(token)) {
             break;
         }
+
         tokens.push_back(token);
+
+        if (next_position == string::npos) {
+            break;
+        }
     }
 
     return tokens;
@@ -88,7 +94,7 @@ unordered_map<string, vector<string>> Util::loadCsvData(ifstream& target_file, v
     bool header_row = true;
 
     while (getline(target_file, row)) {
-        vector<string> row_cells = splitIntoTokens(row);
+        vector<string> row_cells = splitIntoTokens(row, ',');
 
         if (header_row) {
             cols_names = row_cells;

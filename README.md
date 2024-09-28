@@ -22,7 +22,7 @@ It is recommended way to install the necessary tools in Windows.
 
 The guide recommends using the `CLANG64` environment.
 Therefore, you can install the needed tools using the following commands:
-  
+
 ```bash
 pacman -S mingw-w64-clang-x86_64-toolchain
 pacman -S mingw-w64-clang-x86_64-ninja
@@ -145,10 +145,10 @@ You can run the command-line interface `glpsol` to test if the library was insta
 glpsol --version
 ```
 
-The **documentation** must be downloaded from the official [website](<https://ftp.gnu.org/gnu/glpk/>).
+The **documentation** must be downloaded from the official [website](https://ftp.gnu.org/gnu/glpk/).
 
 Select the most recent version tarball.
-At the time of writing, the most recent version is [`glpk-5.0.tar.gz`](<https://ftp.gnu.org/gnu/glpk/glpk-5.0.tar.gz>).
+At the time of writing, the most recent version is [`glpk-5.0.tar.gz`](https://ftp.gnu.org/gnu/glpk/glpk-5.0.tar.gz).
 Extraia o arquivo compactado.
 
 A documentação pode ser encontrada na pasta `/doc`.
@@ -170,3 +170,29 @@ glpsol --version
 ```
 
 The **documentation** can be found in the `/usr/share/doc/glpk-doc` folder.
+
+#### ArgParse
+
+This project uses the **ArgParse** library, which is a header-only library for parsing command-line arguments.
+
+You can download the library from the official [repository](https://github.com/p-ranav/argparse?tab=readme-ov-file#building-installing-and-testing).
+
+Their installation instructions are the following:
+
+```bash
+# Clone the repository
+git clone https://github.com/p-ranav/argparse
+cd argparse
+
+# Build the tests
+mkdir build
+cd build
+cmake -DARGPARSE_BUILD_SAMPLES=on -DARGPARSE_BUILD_TESTS=on ..
+make
+
+# Run tests
+./test/tests
+
+# Install the library
+sudo make install
+```

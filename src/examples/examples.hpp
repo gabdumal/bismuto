@@ -1,13 +1,23 @@
 #ifndef __EXAMPLE_HPP__
 #define __EXAMPLE_HPP__
 
+#include <string>
+using namespace std;
+
 class Examples {
     public:
         enum Example {
             BOOK_C1_S3_SC1,
             BOOK_C3_S1_SC5,
+            READ_CSV,
             LIVESTOCK_DIET,
-            READ_CSV
+        };
+
+        static constexpr string examples_names[] = {
+            "book_c1_s3_sc1",
+            "book_c3_s1_sc5",
+            "read_csv",
+            "livestock_diet",
         };
 
     private:
@@ -18,6 +28,7 @@ class Examples {
 
     public:
         static void run(Example example);
+        static void run(string name);
 };
 
 #endif  // __EXAMPLE_HPP__

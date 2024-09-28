@@ -43,6 +43,7 @@ namespace Model {
 
             /* Reading from CSV */
 
+            void readCsv(ifstream &file);
             void readVariables(ifstream &file);
             void readObjective(ifstream &file);
             void readConstraints(ifstream &file);
@@ -56,10 +57,9 @@ namespace Model {
             void printDebugInformation(glp_prob *problem);
 
         public:
-            Model() = default;
+            Model(string model_path);
             ~Model() = default;
 
-            void readCsv(ifstream &file);
             void solve();
     };
 

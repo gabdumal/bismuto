@@ -26,6 +26,18 @@
       "request": "launch",
       "terminal": "integrated",
       "type": "lldb"
+    },
+    {
+      "args": [
+        "--model",
+        "${workspaceFolder}/src/examples/livestock_diet/model.ods"
+      ],
+      "cwd": "${workspaceFolder}",
+      "name": "LLDB: launch Bismuto (Linux) --model",
+      "program": "${workspaceFolder}/build/src/bismuto",
+      "request": "launch",
+      "terminal": "integrated",
+      "type": "lldb"
     }
   ],
   "version": "0.2.0"

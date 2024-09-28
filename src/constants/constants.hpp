@@ -13,8 +13,6 @@ namespace Constants {
 
     }  // namespace Commands
 
-    constexpr auto version = "0.1.0";
-
 }  // namespace Constants
 
 #endif  // __CONSTANTS_HPP__

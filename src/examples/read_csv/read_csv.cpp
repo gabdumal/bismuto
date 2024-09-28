@@ -10,20 +10,18 @@
 using namespace std;
 
 void Examples::readCsv() {
-    string runtime_directory = format("{}/examples/read_csv", Util::getExecutableDirectory());
+    string csv_file_pth = format("{}/examples/read_csv/data.csv", Util::System::getResourcesDirectory());
+    std::ifstream csv_file(csv_file_pth);
 
-    string file_name = format("{}/data.csv", runtime_directory);
-    std::ifstream target_file(file_name);
-
-    if (!target_file.is_open()) {
-        std::cerr << "Erro ao abrir o arquivo: " << file_name << std::endl;
+    if (!csv_file.is_open()) {
+        std::cerr << "Erro ao abrir o arquivo: " << csv_file_pth << std::endl;
         return;
     }
 
     vector<string> cols_names;
-    unordered_map<string, vector<string>> cols_data = Util::loadCsvData(target_file, cols_names);
+    unordered_map<string, vector<string>> cols_data = Util::Csv::loadCsvData(csv_file, cols_names);
 
-    target_file.close();
+    csv_file.close();
 
     Util::printColsData(cols_data, cols_names);
 }

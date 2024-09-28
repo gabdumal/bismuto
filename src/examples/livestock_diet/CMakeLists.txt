@@ -21,14 +21,14 @@ target_link_libraries(livestock_diet
         model
 )
 
-# Path to the model file relative to the source directory
-set(SRC__EXAMPLES__LIVESTOCK_DIET__MODEL_ODS "${CMAKE_SOURCE_DIR}/src/examples/livestock_diet/model.ods")
+# # Path to the model file relative to the source directory
+# set(SRC__EXAMPLES__LIVESTOCK_DIET__MODEL_ODS "${CMAKE_SOURCE_DIR}/src/examples/livestock_diet/model.ods")
 
-# Custom target to copy the model file
-add_custom_target(copy__src__examples__livestock_diet__model_ods ALL
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different ${SRC__EXAMPLES__LIVESTOCK_DIET__MODEL_ODS} $<TARGET_FILE_DIR:livestock_diet>/model.ods
-    DEPENDS ${SRC__EXAMPLES__LIVESTOCK_DIET__MODEL_ODS}
-)
+# # Custom target to copy the model file
+# add_custom_target(copy__src__examples__livestock_diet__model_ods ALL
+#     COMMAND ${CMAKE_COMMAND} -E copy_if_different ${SRC__EXAMPLES__LIVESTOCK_DIET__MODEL_ODS} $<TARGET_FILE_DIR:livestock_diet>/model.ods
+#     DEPENDS ${SRC__EXAMPLES__LIVESTOCK_DIET__MODEL_ODS}
+# )
 
-# Rewrite the model file every time the target is built
-add_dependencies(livestock_diet copy__src__examples__livestock_diet__model_ods)
+# # Rewrite the model file every time the target is built
+# add_dependencies(livestock_diet copy__src__examples__livestock_diet__model_ods)

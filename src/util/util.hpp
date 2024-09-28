@@ -7,31 +7,50 @@
 #include <vector>
 using namespace std;
 
-class Util {
-    public:
+namespace Util {
+
+    namespace Project {
+
+        string getVersion();
+
+    }  // namespace Project
+
+    namespace System {
+
+        string getResourcesDirectory();
+        string getTempDirectory();
+
+        string getStem(const string& path);
+        string getExtension(const string& path);
+
+        void createDirectory(const string& path);
+
+    }  // namespace System
+
+    namespace Csv {
+
         using Row = vector<string>;
 
-        static string getExecutableDirectory();
+        unordered_map<string, vector<string>> loadCsvData(ifstream& target_file, vector<string>& cols_names);
 
-        static string getStem(const string& path);
-
-        static string getExtension(const string& path);
-
-        static void createDirectory(const string& path);
-
-        static void printColsData(const unordered_map<string, vector<string>>& cols_data,
-                                  const vector<string>& cols_names);
-
-        static unordered_map<string, vector<string>> loadCsvData(ifstream& target_file, vector<string>& cols_names);
-
-        static Row splitIntoTokens(
+        Row splitIntoTokens(
             const string& line, char separator = '\t',
             function<bool(const string&)> should_skip = [](const string&) { return false; },
             function<bool(const string&)> should_stop = [](const string&) { return false; });
 
-        static double stringToDouble(const string& token);
+    }  // namespace Csv
 
-        static string doubleToString(double value);
-};
+    namespace Conversion {
+
+        double stringToDouble(const string& token);
+
+        string doubleToString(double value);
+
+    }  // namespace Conversion
+
+    void printColsData(const unordered_map<string, vector<string>>& cols_data,
+                       const vector<string>& cols_names);
+
+};  // namespace Util
 
 #endif  // __UTIL_HPP__

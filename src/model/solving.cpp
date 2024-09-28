@@ -131,7 +131,7 @@ namespace Model {
         glp_printf("\n");
 
         string output_internal_directory = format("{}/{}", output_directory, this->stem);
-        Util::createDirectory(output_internal_directory);
+        Util::System::createDirectory(output_internal_directory);
 
         string output_csv_path = format("{}/out.csv", output_internal_directory);
         writeSolutionToCsv(problem, output_csv_path);
@@ -190,7 +190,7 @@ namespace Model {
             double minimum = glp_get_col_lb(problem, i);
             double maximum = glp_get_col_ub(problem, i);
 
-            glp_printf("Minimum: %lf; Maximum: %lf;\n", Util::doubleToString(minimum).c_str(), Util::doubleToString(maximum).c_str());
+            glp_printf("Minimum: %lf; Maximum: %lf;\n", Util::Conversion::doubleToString(minimum).c_str(), Util::Conversion::doubleToString(maximum).c_str());
         }
         glp_printf("\n");
 
@@ -205,7 +205,7 @@ namespace Model {
                                     : ">=";
             glp_printf("%s ", comparator.c_str());
             double compared_to = glp_get_row_lb(problem, i);
-            glp_printf("%s\n", Util::doubleToString(compared_to).c_str());
+            glp_printf("%s\n", Util::Conversion::doubleToString(compared_to).c_str());
 
             int *glp_variables = new int[number_of_columns + 1];
             double *glp_coefficients = new double[number_of_columns + 1];

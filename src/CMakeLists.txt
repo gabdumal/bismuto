@@ -20,7 +20,6 @@ target_link_libraries(bismuto
 )
 
 # Directories
-add_subdirectory(public)
 add_subdirectory(constants)
 add_subdirectory(util)
 add_subdirectory(examples)

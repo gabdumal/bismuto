@@ -12,19 +12,19 @@ using namespace std;
 namespace Model {
 
     Model::Model(string model_path) {
-        ifstream ods_file(model_path);
-        if (!ods_file.is_open()) {
+        ifstream model_file(model_path);
+        if (!model_file.is_open()) {
             cerr << "Could not open file " << model_path << endl;
             exit(1);
         }
 
-        this->stem = Util::getStem(model_path);
-        string extension = Util::getExtension(model_path);
+        this->stem = Util::System::getStem(model_path);
+        string extension = Util::System::getExtension(model_path);
         string model_csv_path = model_path;
 
         // Convert ODS to CSV if necessary
         if (extension == ".ods") {
-            string temp_directory = format("{}/temp", Util::getExecutableDirectory());
+            string temp_directory = format("{}/bismuto", Util::System::getTempDirectory());
 
             // Create a temporary CSV file from the ODS file
             string convert_ods_to_csv = format(
@@ -37,6 +37,8 @@ namespace Model {
             }
             cout << endl;
             model_csv_path = format("{}/{}.csv", temp_directory, this->stem);
+        } else if (extension != ".csv") {
+            throw runtime_error("Model file must be in ODS or CSV format!");
         }
 
         ifstream csv_file(model_csv_path);
@@ -53,7 +55,7 @@ namespace Model {
     }
 
     void Model::getCanonicalSheet(optional<string> output_directory) {
-        string canonical_sheets_path = format("{}/public/canonical.ods", Util::getExecutableDirectory());
+        string canonical_sheets_path = format("{}/canonical.ods", Util::System::getResourcesDirectory());
 
         string output_path = format("{}/canonical.ods", output_directory.value_or("."));
 

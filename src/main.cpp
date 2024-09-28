@@ -3,9 +3,9 @@
 #include <string>
 
 #include "../external/pretty_console/pretty_console.hpp"
-#include "constants/constants.hpp"
 #include "examples/examples.hpp"
 #include "model/model.hpp"
+#include "util.hpp"
 
 using namespace std;
 
@@ -51,7 +51,7 @@ void parseArguments(argparse::ArgumentParser &program, int argc, char *argv[]) {
 
 void handleArguments(argparse::ArgumentParser &program, std::string &example_name, std::string &input_path, std::string &output_path) {
     if (program["--version"] == true) {
-        printf("Version: %s\n", Constants::version);
+        printf("Version: %s\n", Util::Project::getVersion().c_str());
         return;
     }
 
@@ -133,7 +133,24 @@ int main(int argc, char *argv[]) {
 
     setArguments(program, example_name, input_path, output_path);
     parseArguments(program, argc, argv);
-    handleArguments(program, example_name, input_path, output_path);
+    try {
+        handleArguments(program, example_name, input_path, output_path);
+    } catch (const std::exception &err) {
+        cerr << endl;
+        PrettyConsole::print("Error: ",
+                             PrettyConsole::Decoration(PrettyConsole::Color::RED, PrettyConsole::Color::DEFAULT, PrettyConsole::Format::BOLD),
+                             cerr);
+
+        PrettyConsole::print(err.what(),
+                             PrettyConsole::Decoration(
+                                 PrettyConsole::Color::DEFAULT, PrettyConsole::Color::DEFAULT, PrettyConsole::Format::BOLD),
+                             cerr);
+
+        std::cerr << endl
+                  << endl
+                  << program;
+        exit(1);
+    }
 
     return 0;
 }

@@ -22,6 +22,20 @@ if(CMAKE_EXPORT_COMPILE_COMMANDS)
     set(CMAKE_CXX_STANDARD_INCLUDE_DIRECTORIES ${CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES})
 endif()
 
+# Configure a header file to pass the version information to the source code
+configure_file(
+  "${CMAKE_SOURCE_DIR}/version.h.in"
+  "${CMAKE_BINARY_DIR}/version.h"
+  @ONLY
+)
+
+# Include the build directory in the include paths
+include_directories("${CMAKE_BINARY_DIR}")
+
 # Directories
 add_subdirectory(src)
 add_subdirectory(external)
+add_subdirectory(resources)
+
+# Install the executable
+install(TARGETS bismuto DESTINATION bin)

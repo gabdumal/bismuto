@@ -10,7 +10,7 @@ using namespace std;
 
 void Examples::bookC3S1Sc5() {
     string model_path = format("{}/examples/book_c3_s1_sc5/model.glpk",
-                               Util::getExecutableDirectory());
+                               Util::System::getResourcesDirectory());
 
     glp_prob *problem;
     double z, bin1, bin2, bin3, bin4, bin5, aluminium, silicon;

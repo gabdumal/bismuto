@@ -22,6 +22,7 @@ target_include_directories(model
 # Linking libraries
 target_link_libraries(model
     PRIVATE
+        util
         variable
         constraint
         objective

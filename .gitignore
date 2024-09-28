@@ -50,3 +50,4 @@ CMakeUserPresets.json
 build/
 .cache/
 .~lock.*.ods#
+./canonical.ods

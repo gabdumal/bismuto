@@ -19,27 +19,37 @@ namespace Model {
         }
 
         this->stem = Util::getStem(model_path);
+        string extension = Util::getExtension(model_path);
+        string model_csv_path = model_path;
 
-        string temp_directory = format("{}/temp", Util::getExecutableDirectory());
+        // Convert ODS to CSV if necessary
+        if (extension == ".ods") {
+            string temp_directory = format("{}/temp", Util::getExecutableDirectory());
 
-        // Create a temporary CSV file from the ODS file
-        string convert_ods_to_csv = format(
-            "{} --headless --convert-to csv:\"Text - txt - csv (StarCalc)\":9,34,76,0,1 {} --outdir {}",
-            Constants::Commands::libreoffice, model_path, temp_directory);
+            // Create a temporary CSV file from the ODS file
+            string convert_ods_to_csv = format(
+                "{} --headless --convert-to csv:\"Text - txt - csv (StarCalc)\":9,34,76,0,1 {} --outdir {}",
+                Constants::Commands::libreoffice, model_path, temp_directory);
 
-        int result = system(convert_ods_to_csv.c_str());
-        if (result != 0) {
-            throw runtime_error("Failed to convert model.ods to model.csv!");
+            int result = system(convert_ods_to_csv.c_str());
+            if (result != 0) {
+                throw runtime_error("Failed to convert model.ods to model.csv!");
+            }
+            cout << endl;
+            model_csv_path = format("{}/{}.csv", temp_directory, this->stem);
         }
-        cout << endl;
 
-        string model_csv_path = format("{}/{}.csv", temp_directory, this->stem);
         ifstream csv_file(model_csv_path);
-
         this->readCsv(csv_file);
 
-        // Delete the temporary CSV file
-        remove(model_csv_path.c_str());
+        if (extension == ".ods") {
+            // Remove the temporary CSV file
+            string remove_temp_csv = format("rm {}", model_csv_path);
+            int result = system(remove_temp_csv.c_str());
+            if (result != 0) {
+                throw runtime_error("Failed to remove temporary CSV file!");
+            }
+        }
     }
 
     void Model::getCanonicalSheet(optional<string> output_directory) {

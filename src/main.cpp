@@ -35,6 +35,7 @@ void setArguments(argparse::ArgumentParser &program, std::string &example_name, 
     program.add_argument("--output", "-o")
         .help("set output path")
         .nargs(1)
+        .default_value(".")
         .store_into(output_path);
 }
 
@@ -91,8 +92,7 @@ void handleArguments(argparse::ArgumentParser &program, std::string &example_nam
             cout);
 
         Model::Model model(input_path);
-        string output_directory = output_path == "" ? "." : output_path;
-        model.solve(output_directory);
+        model.solve(output_path);
         return;
     }
 
@@ -111,10 +111,13 @@ void handleArguments(argparse::ArgumentParser &program, std::string &example_nam
                              PrettyConsole::Decoration(),
                              cout);
 
-        string output_directory = output_path == "" ? "." : output_path;
-        Model::Model::getCanonicalSheet(output_directory);
+        Model::Model::getCanonicalSheet(output_path);
         return;
     }
+
+    PrettyConsole::print("No command provided.\n",
+                         PrettyConsole::Decoration(PrettyConsole::Color::RED, PrettyConsole::Color::DEFAULT, PrettyConsole::Format::BOLD),
+                         cout);
 }
 
 int main(int argc, char *argv[]) {

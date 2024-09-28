@@ -28,9 +28,28 @@
       "type": "lldb"
     },
     {
-      "args": ["--model", "${workspaceFolder}/../canonical.ods"],
+      "args": [
+        "--model",
+        "${workspaceFolder}/../canonical.ods",
+        "--output",
+        ".."
+      ],
       "cwd": "${workspaceFolder}",
-      "name": "LLDB: launch Bismuto (Linux) --model",
+      "name": "LLDB: launch Bismuto (Linux) --model canonical.ods",
+      "program": "${workspaceFolder}/build/src/bismuto",
+      "request": "launch",
+      "terminal": "integrated",
+      "type": "lldb"
+    },
+    {
+      "args": [
+        "--model",
+        "${workspaceFolder}/../canonical.csv",
+        "--output",
+        ".."
+      ],
+      "cwd": "${workspaceFolder}",
+      "name": "LLDB: launch Bismuto (Linux) --model canonical.csv",
       "program": "${workspaceFolder}/build/src/bismuto",
       "request": "launch",
       "terminal": "integrated",

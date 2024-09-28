@@ -15,6 +15,8 @@ class Util {
 
         static string getStem(const string& path);
 
+        static string getExtension(const string& path);
+
         static void createDirectory(const string& path);
 
         static void printColsData(const unordered_map<string, vector<string>>& cols_data,

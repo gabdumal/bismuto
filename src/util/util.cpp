@@ -32,6 +32,11 @@ string Util::getStem(const string& path) {
     return fs_path.stem().string();
 }
 
+string Util::getExtension(const string& path) {
+    filesystem::path fs_path(path);
+    return fs_path.extension().string();
+}
+
 void Util::createDirectory(const string& path) {
     filesystem::create_directories(path);
 }

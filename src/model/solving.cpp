@@ -21,7 +21,7 @@ namespace Model {
     }
 
     void writeSolutionToCsv(glp_prob *problem, string output_csv_path) {
-        printf("Writing basic solution to %s...\n", output_csv_path.c_str());
+        printf("Writing basic solution to '%s'...\n", output_csv_path.c_str());
 
         int number_of_columns = glp_get_num_cols(problem);
 

@@ -60,7 +60,7 @@ namespace Model {
             Model(string model_path);
             ~Model() = default;
 
-            void solve();
+            void solve(string output_directory = ".");
 
             static void getCanonicalSheet(optional<string> output_directory = nullopt);
     };

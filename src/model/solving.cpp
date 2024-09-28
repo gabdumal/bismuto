@@ -1,9 +1,14 @@
 #include <glpk.h>
 
+#include <format>
+#include <fstream>
+
 #include "../util/util.hpp"
 #include "constraint/constraint.hpp"
 #include "definitions.hpp"
 #include "model.hpp"
+
+using namespace std;
 
 namespace Model {
 
@@ -13,6 +18,25 @@ namespace Model {
                : data_type == DataType::INTEGER
                    ? GLP_IV
                    : GLP_BV;
+    }
+
+    void writeSolutionToCsv(glp_prob *problem, string output_csv_path) {
+        int number_of_columns = glp_get_num_cols(problem);
+
+        ofstream output_csv(output_csv_path);
+        output_csv << "Variable,Value\n";
+
+        string objective_name = glp_get_obj_name(problem);
+        double objective_value = glp_get_obj_val(problem);
+        output_csv << format("{},{}\n", objective_name, objective_value);
+
+        for (unsigned int i = 1; i <= number_of_columns; i++) {
+            string variable_name = glp_get_col_name(problem, i);
+            double variable_value = glp_get_col_prim(problem, i);
+            output_csv << format("{},{}\n", variable_name, variable_value);
+        }
+
+        output_csv.close();
     }
 
     void Model::setObjective(glp_prob *problem) {
@@ -91,7 +115,7 @@ namespace Model {
         }
     }
 
-    void Model::solve() {
+    void Model::solve(string output_directory) {
         glp_prob *problem = glp_create_prob();
 
         // Set problem name
@@ -103,6 +127,15 @@ namespace Model {
 
         glp_simplex(problem, NULL);
         glp_printf("\n");
+
+        string output_internal_directory = format("{}/{}", output_directory, this->name);
+        Util::createDirectory(output_internal_directory);
+
+        string output_csv_path = format("{}/out.csv", output_internal_directory);
+        writeSolutionToCsv(problem, output_csv_path);
+
+        string output_print_path = format("{}/out.txt", output_internal_directory);
+        glp_print_sol(problem, output_print_path.c_str());
 
         double objective_value = glp_get_obj_val(problem);
         glp_printf("Objective value: %lf\n", objective_value);

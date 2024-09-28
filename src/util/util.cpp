@@ -32,6 +32,10 @@ string Util::getStem(const string& path) {
     return fs_path.stem().string();
 }
 
+void Util::createDirectory(const string& path) {
+    filesystem::create_directories(path);
+}
+
 Util::Row Util::splitIntoTokens(const string& line, char separator, function<bool(const string&)> should_skip,
                                 function<bool(const string&)> should_stop) {
     Row tokens;

@@ -12,7 +12,10 @@ class Util {
         using Row = vector<string>;
 
         static string getExecutableDirectory();
+
         static string getStem(const string& path);
+
+        static void createDirectory(const string& path);
 
         static void printColsData(const unordered_map<string, vector<string>>& cols_data,
                                   const vector<string>& cols_names);

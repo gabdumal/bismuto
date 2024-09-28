@@ -83,12 +83,13 @@ void handleArguments(argparse::ArgumentParser &program, std::string &example_nam
             cout);
 
         PrettyConsole::print(
-            format("{}Input path: {}\n\n", PrettyConsole::tab, input_path),
+            format("{}Input path: {}\n{}Output path: {}\n", PrettyConsole::tab, input_path, PrettyConsole::tab, output_path),
             PrettyConsole::Decoration(),
             cout);
 
         Model::Model model(input_path);
-        model.solve();
+        string output_directory = output_path == "" ? "." : output_path;
+        model.solve(output_directory);
         return;
     }
 

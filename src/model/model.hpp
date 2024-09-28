@@ -61,6 +61,8 @@ namespace Model {
             ~Model() = default;
 
             void solve();
+
+            static void getCanonicalSheet(optional<string> output_directory = nullopt);
     };
 
 }  // namespace Model

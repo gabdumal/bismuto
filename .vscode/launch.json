@@ -28,12 +28,18 @@
       "type": "lldb"
     },
     {
-      "args": [
-        "--model",
-        "${workspaceFolder}/src/examples/livestock_diet/model.ods"
-      ],
+      "args": ["--model", "${workspaceFolder}/../canonical.ods"],
       "cwd": "${workspaceFolder}",
       "name": "LLDB: launch Bismuto (Linux) --model",
+      "program": "${workspaceFolder}/build/src/bismuto",
+      "request": "launch",
+      "terminal": "integrated",
+      "type": "lldb"
+    },
+    {
+      "args": ["--get-sheet"],
+      "cwd": "${workspaceFolder}",
+      "name": "LLDB: launch Bismuto (Linux) --get-sheet",
       "program": "${workspaceFolder}/build/src/bismuto",
       "request": "launch",
       "terminal": "integrated",

@@ -16,47 +16,20 @@
 
 using namespace std;
 
-string Util::getFormattedBool(bool value) { return value ? "TRUE" : "FALSE"; }
-
-string Util::getTextBetween(string text, optional<string> start, optional<string> end) {
-    size_t start_position = 0;
-    if (start.has_value()) {
-        start_position = text.find(start.value());
-        if (start_position == string::npos) {
-            return "";
-        }
-        start_position += start.value().length();
-    }
-
-    size_t end_position = text.length();
-    if (end.has_value()) {
-        end_position = text.find(end.value(), start_position);
-        if (end_position == string::npos) {
-            return "";
-        }
-    }
-
-    return text.substr(start_position, end_position - start_position);
-}
-
-string Util::getLineContent(int line, string content) {
-    istringstream content_stream(content);
-    string line_content;
-    for (int i = 0; i < line; i++) {
-        getline(content_stream, line_content);
-    }
-    return line_content;
-}
-
 string Util::getExecutableDirectory() {
 #if defined(_WIN32) || defined(_WIN64)
     char buffer[MAX_PATH];
     GetModuleFileNameA(NULL, buffer, MAX_PATH);
-    std::string::size_type pos = std::string(buffer).find_last_of("\\/");
-    return std::string(buffer).substr(0, pos);
+    string::size_type pos = string(buffer).find_last_of("\\/");
+    return string(buffer).substr(0, pos);
 #elif defined(__linux__)
-    return std::filesystem::canonical("/proc/self/exe").parent_path().string();
+    return filesystem::canonical("/proc/self/exe").parent_path().string();
 #endif
+}
+
+string Util::getStem(const string& path) {
+    filesystem::path fs_path(path);
+    return fs_path.stem().string();
 }
 
 Util::Row Util::splitIntoTokens(const string& line, char separator, function<bool(const string&)> should_skip,
@@ -120,7 +93,7 @@ unordered_map<string, vector<string>> Util::loadCsvData(ifstream& target_file, v
 
 void Util::printColsData(const unordered_map<string, vector<string>>& cols_data, const vector<string>& cols_names) {
     for (const string& col_name : cols_names) {
-        cout << "Dados da coluna: " << col_name << ":" << endl;
+        cout << "Dados da coluna " << col_name << ":" << endl;
         for (const string& dado : cols_data.at(col_name)) {
             cout << dado << " ";
         }

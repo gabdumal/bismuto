@@ -2,7 +2,6 @@
 #define __UTIL_HPP__
 
 #include <functional>
-#include <optional>
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -12,12 +11,8 @@ class Util {
     public:
         using Row = vector<string>;
 
-        static string getFormattedBool(bool value);
-
-        static string getTextBetween(string text, optional<string> start, optional<string> end);
-        static string getLineContent(int line, string content);
-
         static string getExecutableDirectory();
+        static string getStem(const string& path);
 
         static void printColsData(const unordered_map<string, vector<string>>& cols_data,
                                   const vector<string>& cols_names);

@@ -18,7 +18,7 @@ namespace Model {
             exit(1);
         }
 
-        string model_stem = Util::getStem(model_path);
+        this->stem = Util::getStem(model_path);
 
         string temp_directory = format("{}/temp", Util::getExecutableDirectory());
 
@@ -33,7 +33,7 @@ namespace Model {
         }
         cout << endl;
 
-        string model_csv_path = format("{}/{}.csv", temp_directory, model_stem);
+        string model_csv_path = format("{}/{}.csv", temp_directory, this->stem);
         ifstream csv_file(model_csv_path);
 
         this->readCsv(csv_file);

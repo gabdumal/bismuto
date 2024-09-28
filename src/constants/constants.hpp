@@ -4,12 +4,16 @@
 namespace Constants {
 
     namespace Commands {
+
 #if defined(_WIN32) || defined(_WIN64)
         constexpr auto libreoffice = "start soffice --calc ";
 #elif defined(__linux__)
         constexpr auto libreoffice = "libreoffice --calc ";
 #endif
+
     }  // namespace Commands
+
+    constexpr auto version = "0.1.0";
 
 }  // namespace Constants
 

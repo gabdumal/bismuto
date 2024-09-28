@@ -105,13 +105,28 @@ void Util::printColsData(const unordered_map<string, vector<string>>& cols_data,
     }
 }
 
+/**
+ * @brief Converts a string to a double.
+ *
+ * This function takes a string representation of a number and converts it to a double.
+ * It handles strings with spaces and commas, replacing commas with periods to ensure proper conversion.
+ *
+ * @param token The string to be converted to a double. It must be in the european format, with a comma as the decimal separator.
+ * @return The double representation of the input string. Returns 0 if the input string is empty.
+ */
 double Util::stringToDouble(const string& token) {
+    if (token.empty()) {
+        return 0;
+    }
+
     string copy = token;
     copy.erase(remove(copy.begin(), copy.end(), ' '), copy.end());
+
     size_t pos = copy.find(',');
     if (pos != string::npos) {
         copy.replace(pos, 1, ".");
     }
+
     return stod(copy);
 }
 

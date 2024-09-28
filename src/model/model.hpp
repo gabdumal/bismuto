@@ -17,6 +17,7 @@ namespace Model {
 
     class Model {
         private:
+            string stem;
             string name;
             vector<Variable::Variable> variables;
             bool has_set_all_variables = false;
@@ -31,6 +32,8 @@ namespace Model {
             double getVariableCoefficient(Id variable_id, Id constraint_id);
 
             /* Setters */
+
+            void setStem(string stem);
 
             void setName(string name);
 

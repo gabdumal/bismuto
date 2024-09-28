@@ -13,7 +13,7 @@ class Examples {
             LIVESTOCK_DIET,
         };
 
-        static constexpr string examples_names[] = {
+        static constexpr const char* examples_names[] = {
             "book_c1_s3_sc1",
             "book_c3_s1_sc5",
             "read_csv",

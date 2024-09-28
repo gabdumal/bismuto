@@ -3,8 +3,11 @@
 #include <string>
 
 #include "../external/pretty_console/pretty_console.hpp"
+#include "constants/constants.hpp"
 #include "examples/examples.hpp"
 #include "model/model.hpp"
+
+using namespace std;
 
 void setArguments(argparse::ArgumentParser &program, std::string &example_name, std::string &input_path, std::string &output_path) {
     program.add_argument("--version", "-v")
@@ -47,7 +50,7 @@ void parseArguments(argparse::ArgumentParser &program, int argc, char *argv[]) {
 
 void handleArguments(argparse::ArgumentParser &program, std::string &example_name, std::string &input_path, std::string &output_path) {
     if (program["--version"] == true) {
-        cout << "Version 0.1.0" << endl;
+        printf("Version: %s\n", Constants::version);
         return;
     }
 
@@ -63,7 +66,7 @@ void handleArguments(argparse::ArgumentParser &program, std::string &example_nam
             cout);
 
         PrettyConsole::print(
-            format(": {}\n\n", example_name),
+            format(": {}...\n\n", example_name),
             PrettyConsole::Decoration(),
             cout);
 
@@ -77,13 +80,13 @@ void handleArguments(argparse::ArgumentParser &program, std::string &example_nam
                              cout);
 
         PrettyConsole::print(
-            "model\n",
+            "model",
             PrettyConsole::Decoration(
                 PrettyConsole::Color::CYAN, PrettyConsole::Color::DEFAULT, PrettyConsole::Format::BOLD),
             cout);
 
         PrettyConsole::print(
-            format("{}Input path: {}\n{}Output path: {}\n", PrettyConsole::tab, input_path, PrettyConsole::tab, output_path),
+            format("...\n{}Input path: {}\n{}Output path: {}\n", PrettyConsole::tab, input_path, PrettyConsole::tab, output_path),
             PrettyConsole::Decoration(),
             cout);
 
@@ -104,7 +107,7 @@ void handleArguments(argparse::ArgumentParser &program, std::string &example_nam
                 PrettyConsole::Color::CYAN, PrettyConsole::Color::DEFAULT, PrettyConsole::Format::BOLD),
             cout);
 
-        PrettyConsole::print(" sheet.\n",
+        PrettyConsole::print(" sheet...\n",
                              PrettyConsole::Decoration(),
                              cout);
 

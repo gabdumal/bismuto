@@ -21,19 +21,21 @@ namespace Model {
     }
 
     void writeSolutionToCsv(glp_prob *problem, string output_csv_path) {
+        printf("Writing basic solution to %s...\n", output_csv_path.c_str());
+
         int number_of_columns = glp_get_num_cols(problem);
 
         ofstream output_csv(output_csv_path);
-        output_csv << "Variable,Value\n";
+        output_csv << "Variable\tValue\n";
 
         string objective_name = glp_get_obj_name(problem);
         double objective_value = glp_get_obj_val(problem);
-        output_csv << format("{},{}\n", objective_name, objective_value);
+        output_csv << format("{}\t{}\n", objective_name, objective_value);
 
-        for (unsigned int i = 1; i <= number_of_columns; i++) {
+        for (int i = 1; i <= number_of_columns; i++) {
             string variable_name = glp_get_col_name(problem, i);
             double variable_value = glp_get_col_prim(problem, i);
-            output_csv << format("{},{}\n", variable_name, variable_value);
+            output_csv << format("{}\t{}\n", variable_name, variable_value);
         }
 
         output_csv.close();
@@ -128,7 +130,7 @@ namespace Model {
         glp_simplex(problem, NULL);
         glp_printf("\n");
 
-        string output_internal_directory = format("{}/{}", output_directory, this->name);
+        string output_internal_directory = format("{}/{}", output_directory, this->stem);
         Util::createDirectory(output_internal_directory);
 
         string output_csv_path = format("{}/out.csv", output_internal_directory);
@@ -138,7 +140,7 @@ namespace Model {
         glp_print_sol(problem, output_print_path.c_str());
 
         double objective_value = glp_get_obj_val(problem);
-        glp_printf("Objective value: %lf\n", objective_value);
+        glp_printf("\nObjective value: %lf\n", objective_value);
 
         for (auto variable : this->variables) {
             Id variable_id = variable.getId();
@@ -158,13 +160,13 @@ namespace Model {
         glp_printf("Objective: %s\n", glp_get_obj_name(problem));
         glp_printf("Direction: %s\n", glp_get_obj_dir(problem) == GLP_MIN ? "MINIMIZE" : "MAXIMIZE");
         glp_printf("Coefficients: ");
-        for (unsigned int i = 1; i <= number_of_columns; i++) {
+        for (int i = 1; i <= number_of_columns; i++) {
             glp_printf("[%d] %s: %lf; ", i, glp_get_col_name(problem, i), glp_get_obj_coef(problem, i));
         }
         glp_printf("\n\n");
 
         glp_printf("Variables:\n");
-        for (unsigned int i = 1; i <= number_of_columns; i++) {
+        for (int i = 1; i <= number_of_columns; i++) {
             glp_printf("%s ", glp_get_col_name(problem, i));
             int glp_data_type = glp_get_col_kind(problem, i);
 
@@ -193,7 +195,7 @@ namespace Model {
         glp_printf("\n");
 
         glp_printf("Constraints:\n");
-        for (unsigned int i = 1; i <= number_of_rows; i++) {
+        for (int i = 1; i <= number_of_rows; i++) {
             glp_printf("%s ", glp_get_row_name(problem, i));
             int glp_row_type = glp_get_row_type(problem, i);
             string comparator = glp_row_type == GLP_FX
@@ -209,7 +211,7 @@ namespace Model {
             double *glp_coefficients = new double[number_of_columns + 1];
             int number_of_coefficients = glp_get_mat_row(problem, i, glp_variables, glp_coefficients);
 
-            for (unsigned int j = 1; j <= number_of_coefficients; j++) {
+            for (int j = 1; j <= number_of_coefficients; j++) {
                 glp_printf("[%d] %s: %lf; ", glp_variables[j], glp_get_col_name(problem, glp_variables[j]), glp_coefficients[j]);
             }
             glp_printf("\n");

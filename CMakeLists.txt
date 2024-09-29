@@ -5,6 +5,15 @@ if (${CMAKE_VERSION} VERSION_LESS 3.12)
     cmake_policy(VERSION ${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION})
 endif ()
 
+# Toolchain
+if (WIN32)
+    set(CMAKE_TOOLCHAIN_FILE "${CMAKE_SOURCE_DIR}/cmake/toolchains/windows.cmake")
+elseif (UNIX)
+    set(CMAKE_TOOLCHAIN_FILE "${CMAKE_SOURCE_DIR}/cmake/toolchains/linux.cmake")
+else()
+    message(FATAL_ERROR "Unsupported platform")
+endif()
+
 # Project
 project(bismuto
         LANGUAGES CXX

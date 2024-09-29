@@ -15,6 +15,7 @@
     "Constexpr",
     "DCMAKE",
     "devel",
+    "doskey",
     "glpk",
     "GLPK",
     "glpsol",
@@ -36,7 +37,7 @@
   "clang_tidy.enabled": true,
   "clangd.completion.style": "bundled",
   "cmake.buildDirectory": "${workspaceFolder}/build",
-  "cmake.configureArgs": ["-DCMAKE_TOOLCHAIN_FILE=cmake/linux.cmake"],
+  "cmake.configureArgs": [],
   "cmake.configureOnOpen": true,
   "cmake.debugConfig": {
     "linux": {

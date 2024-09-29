@@ -1,4 +1,5 @@
 # Executables
+set(CMAKE_BUILD_WITH_INSTALL_RPATH TRUE)
 add_executable(bismuto
     main.cpp
 )
@@ -12,6 +13,7 @@ target_include_directories(bismuto
 # Linking libraries
 target_link_libraries(bismuto
     PRIVATE
+        argparse::argparse
         glpk
         pretty_console
         constants

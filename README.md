@@ -28,6 +28,20 @@ pacman -S mingw-w64-clang-x86_64-toolchain
 pacman -S mingw-w64-clang-x86_64-ninja
 ```
 
+After that, edit the `.bashrc` (or `.zshrc`, `.bash_profile`, etc.) file in your home directory, and add the following line:
+
+```bash
+alias make="mingw32-make"
+```
+
+Then run the following command on Windows Command Prompt:
+
+```cmd
+doskey make=mingw32-make
+```
+
+This will add an alternative name the `mingw32-make` command, which can now be called using the `make` command.
+
 #### Fedora
 
 You can install the necessary tools using the following command:

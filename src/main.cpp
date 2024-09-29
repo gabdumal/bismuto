@@ -5,11 +5,11 @@
 #include "../external/pretty_console/pretty_console.hpp"
 #include "examples/examples.hpp"
 #include "model/model.hpp"
-#include "util.hpp"
+#include "util/util.hpp"
 
 using namespace std;
 
-void setArguments(argparse::ArgumentParser &program, std::string &example_name, std::string &input_path, std::string &output_path) {
+void setArguments(argparse::ArgumentParser &program, string &example_name, string &input_path, string &output_path) {
     program.add_argument("--version", "-v")
         .help("show program version")
         .default_value(false)
@@ -42,14 +42,14 @@ void setArguments(argparse::ArgumentParser &program, std::string &example_name, 
 void parseArguments(argparse::ArgumentParser &program, int argc, char *argv[]) {
     try {
         program.parse_args(argc, argv);
-    } catch (const std::exception &err) {
-        std::cerr << err.what() << std::endl;
-        std::cerr << program;
+    } catch (const exception &err) {
+        cerr << err.what() << endl;
+        cerr << program;
         exit(1);
     }
 }
 
-void handleArguments(argparse::ArgumentParser &program, std::string &example_name, std::string &input_path, std::string &output_path) {
+void handleArguments(argparse::ArgumentParser &program, string &example_name, string &input_path, string &output_path) {
     if (program["--version"] == true) {
         printf("Version: %s\n", Util::Project::getVersion().c_str());
         return;
@@ -135,7 +135,7 @@ int main(int argc, char *argv[]) {
     parseArguments(program, argc, argv);
     try {
         handleArguments(program, example_name, input_path, output_path);
-    } catch (const std::exception &err) {
+    } catch (const exception &err) {
         cerr << endl;
         PrettyConsole::print("Error: ",
                              PrettyConsole::Decoration(PrettyConsole::Color::RED, PrettyConsole::Color::DEFAULT, PrettyConsole::Format::BOLD),
@@ -146,9 +146,9 @@ int main(int argc, char *argv[]) {
                                  PrettyConsole::Color::DEFAULT, PrettyConsole::Color::DEFAULT, PrettyConsole::Format::BOLD),
                              cerr);
 
-        std::cerr << endl
-                  << endl
-                  << program;
+        cerr << endl
+             << endl
+             << program;
         exit(1);
     }
 

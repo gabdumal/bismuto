@@ -36,13 +36,14 @@ namespace Util {
 
         string getResourcesDirectory() {
             char result[PATH_MAX];
-#ifdef _WIN32
-            GetModuleFileName(NULL, result, MAX_PATH);
+            ssize_t count = 0;
+
+#if defined(_WIN32) || defined(_WIN64)
+            count = GetModuleFileName(NULL, result, MAX_PATH);
 #else
-            ssize_t count = readlink("/proc/self/exe", result, PATH_MAX);
+            count = readlink("/proc/self/exe", result, PATH_MAX);
 #endif
             string exe_path = string(result, (count > 0) ? count : 0);
-
             // Get the directory of the executable
             string exe_dir = filesystem::path(exe_path).parent_path().string();
 
@@ -52,13 +53,14 @@ namespace Util {
         }
 
         string getTempDirectory() {
-#ifdef _WIN32
-            char tempPath[MAX_PATH];
-            DWORD pathLen = GetTempPath(MAX_PATH, tempPath);
-            if (pathLen == 0 || pathLen > MAX_PATH) {
+#if defined(_WIN32) || defined(_WIN64)
+            char temp_path[MAX_PATH];
+            DWORD path_len = GetTempPath(MAX_PATH, temp_path);
+
+            if (path_len == 0 || path_len > MAX_PATH) {
                 throw runtime_error("Failed to get the temporary directory path");
             }
-            return string(tempPath);
+            return string(temp_path);
 #else
             const char* temp_path = getenv("TMPDIR");
             if (temp_path == nullptr) {

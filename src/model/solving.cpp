@@ -127,8 +127,7 @@ namespace Model {
         this->setVariables(problem);
         this->setConstraints(problem);
 
-        glp_simplex(problem, NULL);
-        glp_printf("\n");
+        int status = glp_simplex(problem, NULL);
 
         string output_internal_directory = format("{}/{}", output_directory, this->stem);
         Util::System::createDirectory(output_internal_directory);
@@ -137,7 +136,7 @@ namespace Model {
         writeSolutionToCsv(problem, output_csv_path);
 
         string output_print_path = format("{}/out.txt", output_internal_directory);
-        glp_print_sol(problem, output_print_path.c_str());
+        glp_print_mip(problem, output_print_path.c_str());
 
         double objective_value = glp_get_obj_val(problem);
         glp_printf("\nObjective value: %lf\n", objective_value);
